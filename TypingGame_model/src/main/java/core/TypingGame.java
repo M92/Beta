@@ -68,7 +68,7 @@ public class TypingGame {
     @PostConstruct
     private void init(){
         Logger.getAnonymousLogger().log(Level.INFO, "Game alive");
-        openFile();
+        //openFile();
         //createPlayer();
        
     }

@@ -37,10 +37,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class TestTypingGame {
-    
-    public TestTypingGame() {
-    }
-    
      @Inject
     TypingGame game;
 
@@ -56,14 +52,14 @@ public class TestTypingGame {
                 .addPackage("core")
                 // This will add test-persitence.xml as persistence.xml (renamed)
                 // in folder META-INF, see Files > jpa_managing > target > arquillian
-                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 // Must have for CDI to work
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
     }
 
   @Test
-    public void testPersistAProduct() throws Exception {
+    public void testPersistAWord() throws Exception {
         Word p = new Word();
         p.setWord("aaa");
         game.getWordHandler().create(p);
@@ -72,14 +68,15 @@ public class TestTypingGame {
         assertTrue(ps.get(0).getWord().equals(p.getWord()));
 
     }
-/*
-    @Test
-    public void testAddProduct() throws Exception {
-        Product p = new Product("ppp", 1111);
-        shop.getProductCatalogue().create(p);
-        assertNotNull(shop.getProductCatalogue().findAll());
-    }
 
+    @Test
+    public void testAddWord() throws Exception {
+        Word p = new Word();
+        p.setWord("bbb");
+        game.getWordHandler().create(p);
+        assertNotNull(game.getWordHandler().findAll());
+    }
+/*
     @Test
     public void testFind() throws Exception {
         Product p = new Product("fifi", 222);
@@ -122,7 +119,7 @@ public class TestTypingGame {
     }
 */
     
-    
+/*    
     @Before
     public void setUp() throws Exception {
         clearAll();
@@ -141,5 +138,5 @@ public class TestTypingGame {
      
         utx.commit();
     }
-    
+  */  
 }
