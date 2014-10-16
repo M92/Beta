@@ -16,13 +16,13 @@ import util.AbstractDAO;
  * @author Vivi
  */
 @Stateless
-public class WordHandler extends AbstractDAO<String, Long> {
+public class WordHandler extends AbstractDAO<Word, Long> {
     
     @PersistenceContext
     private EntityManager em;
     
     public WordHandler() {
-        super(String.class);
+        super(Word.class);
     }
 
     //T t is the word we typed

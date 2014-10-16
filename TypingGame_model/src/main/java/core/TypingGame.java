@@ -23,12 +23,14 @@ import util.Time;
 @ApplicationScoped
 public class TypingGame {
     
+    private Time time;
+  
     @EJB
     private WordHandler wordHandler;
     
     public TypingGame(){
-       new Time();
-       init();
+       time = new Time();
+      // init();
     }
     
     public void createPlayer(String name){
@@ -57,6 +59,11 @@ public class TypingGame {
                 in.close();
         }
     }
+    
+    private boolean isTimedOut(){
+        return time.getTimeDifference() == 30;  
+    }
+    
     
     @PostConstruct
     private void init(){

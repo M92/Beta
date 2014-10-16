@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Thu Oct 16 10:19:33 CEST 2014:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.10.2.0 - (1582446): instance a816c00e-0149-180a-5e23-00000220aaa0 
+on database directory C:\Users\Vivi\AppData\Local\Temp\gfembed5150432030024170549tmp\lib\databases\embedded_default with class loader sun.misc.Launcher$AppClassLoader@dd20f6 
+Loaded from file:/C:/Users/Vivi/.m2/repository/org/glassfish/main/extras/glassfish-embedded-all/4.1/glassfish-embedded-all-4.1.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.7.0_51-b13
+user.dir=C:\Users\Vivi\Dropbox\School_stuff\Webapplikationer DAT076\Projekt\TypingGame_model
+os.name=Windows 7
+os.arch=x86
+os.version=6.1
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''

@@ -51,12 +51,12 @@ public class TestTypingGame {
     //CustomerRegistry customer;
     @Deployment
     public static Archive<?> createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "shop.war")
+        return ShrinkWrap.create(WebArchive.class)
                 // Add all classes
-                .addPackage("edu.chl.hajo.shop.core")
+                .addPackage("core")
                 // This will add test-persitence.xml as persistence.xml (renamed)
                 // in folder META-INF, see Files > jpa_managing > target > arquillian
-                .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
+                .addAsResource("META-INF/persistence.xml", "META-INF/persistence.xml")
                 // Must have for CDI to work
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
 
@@ -66,13 +66,13 @@ public class TestTypingGame {
     public void testPersistAProduct() throws Exception {
         Word p = new Word();
         p.setWord("aaa");
-        game.getWordHandler().create(null);
-        List<Word> ps = shop.getProductCatalogue().findAll();
+        game.getWordHandler().create(p);
+        List<Word> ps = game.getWordHandler().findAll();
         assertTrue(ps.size() > 0);
-        assertTrue(ps.get(0).getName().equals(p.getName()));
+        assertTrue(ps.get(0).getWord().equals(p.getWord()));
 
     }
-
+/*
     @Test
     public void testAddProduct() throws Exception {
         Product p = new Product("ppp", 1111);
@@ -120,7 +120,7 @@ public class TestTypingGame {
         Product p6 = shop.getProductCatalogue().find(p5.getId());
         assertTrue(p6.getName().equals(p5.getName()));
     }
-
+*/
     
     
     @Before
@@ -129,7 +129,7 @@ public class TestTypingGame {
     }
    
      // Order matters
-    @PersistenceContext(unitName = "jpa_shop_test_pu")
+    @PersistenceContext(unitName = "com.mycompany_TypingGame_model_jar_1.0-SNAPSHOTPU")
     @Produces
     @Default
     EntityManager em;
