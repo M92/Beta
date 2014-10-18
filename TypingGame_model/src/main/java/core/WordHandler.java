@@ -27,8 +27,7 @@ import util.AbstractDAO;
  */
 @Stateless
 public class WordHandler extends AbstractDAO<Word, Long> {
-
-    private static final String FILE_PATH = "";
+    
     @PersistenceContext
     private EntityManager em;
 

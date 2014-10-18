@@ -10,8 +10,8 @@ package util;
  * @author Vivi
  */
 public class Time {
-    Long startTime; //= System.nanoTime();
-    Long stopTime; // = System.nanoTime();
+    private final Long startTime; //= System.nanoTime();
+    private Long stopTime; // = System.nanoTime();
     
     public Time(){
         startTime = System.currentTimeMillis();

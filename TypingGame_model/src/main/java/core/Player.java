@@ -5,7 +5,6 @@
  */
 package core;
 
-import util.AbstractDAO;
 
 /**
  *
@@ -13,9 +12,9 @@ import util.AbstractDAO;
  */
 public class Player implements Runnable {
 
-    String name;
-    String word;
-    WordHandler handler;
+    private final String name;
+    private String word;
+    private WordHandler handler;
 
     public Player(String name) {
         this.name = name;
