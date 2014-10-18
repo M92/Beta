@@ -53,7 +53,8 @@ public abstract class AbstractDAO<T, K> implements IDAO<T, K> {
     public List<T> findAll() {
         return get(true, -1, -1);
     }
-
+    
+    //Might not need this method
     @Override
     public List<T> findRange(int first, int n) {
         return get(false, first, n);

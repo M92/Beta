@@ -5,10 +5,6 @@
  */
 package core;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -42,23 +38,7 @@ public class TypingGame {
         return wordHandler;
     }
     
-    private void openFile() {
-        Scanner in = null;
-        ArrayList<String> list;
-        try {
-            in = new Scanner(new File("src/main/words.txt"));
-            list = new ArrayList<>();
-            while (in.hasNext()){
-                list.add(in.next());
-                System.out.println(in.toString());
-             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (in != null) 
-                in.close();
-        }
-    }
+   
     
     private boolean isTimedOut(){
         return time.getTimeDifference() == 30;  

@@ -5,17 +5,16 @@
  */
 import core.TypingGame;
 import core.Word;
-import java.util.ArrayList;
 import java.util.List;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -37,7 +36,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class TestTypingGame {
-     @Inject
+
+    @Inject
     TypingGame game;
 
     @Inject
@@ -58,7 +58,8 @@ public class TestTypingGame {
 
     }
 
-  @Test
+    @Test
+    @InSequence(1)
     public void testPersistAWord() throws Exception {
         Word p = new Word();
         p.setWord("aaa");
@@ -70,62 +71,96 @@ public class TestTypingGame {
     }
 
     @Test
+    @InSequence(2)
     public void testAddWord() throws Exception {
         Word p = new Word();
         p.setWord("bbb");
         game.getWordHandler().create(p);
         assertNotNull(game.getWordHandler().findAll());
     }
-/*
+
     @Test
+    @InSequence(3)
     public void testFind() throws Exception {
-        Product p = new Product("fifi", 222);
-        shop.getProductCatalogue().create(p);
-        assertTrue(p.equals(shop.getProductCatalogue().find(p.getId())));
+        Word p = new Word();
+        game.getWordHandler().create(p);
+        assertTrue(p.equals(game.getWordHandler().find(p.getId())));
     }
 
     @Test
-    public void testDeleteProduct() throws Exception {
-        Product product1 = new Product("bbb", 888);
-        shop.getProductCatalogue().create(product1);
+    @InSequence(4)
+    public void testDeleteWord() throws Exception {
+        Word product1 = new Word();
+        game.getWordHandler().create(product1);
 
-        shop.getProductCatalogue().delete(product1.getId());
+        game.getWordHandler().delete(product1.getId());
 
-        assertTrue(shop.getProductCatalogue().findAll().isEmpty());
+        assertTrue(game.getWordHandler().findAll().isEmpty());
     }
 
     @Test
-    public void testUpdateProductPrice() throws Exception {
-        Product p3 = new Product("ccc", 777);
-        shop.getProductCatalogue().create(p3);
+    @InSequence(5)
+    public void testUpdateWord() throws Exception {
+        Word p3 = new Word();
+        game.getWordHandler().create(p3);
 
-        p3.setPrice(777777);
-        shop.getProductCatalogue().update(p3);
+        p3.setWord("updated");
+        game.getWordHandler().update(p3);
 
-        Product p4 = shop.getProductCatalogue().find(p3.getId());
-        assertEquals(p4.getPrice(), p3.getPrice(), 0.00);
+        Word p4 = game.getWordHandler().find(p3.getId());
+        assertEquals(p4.getWord(), p3.getWord());
     }
 
     @Test
-    public void testUpdateProductName() throws Exception {
-        Product p5 = new Product("ddd", 666);
-        shop.getProductCatalogue().create(p5);
+    @InSequence(6)
+    public void testFindRange() throws Exception {
+        String[] names = "aaa, bbb, ccc, ddd, eee, fff, ggg, hhh".split(",");
+        for (String s : names) {
+            Word p = new Word();
+            p.setWord(s);
+            game.getWordHandler().create(p);
+        }
+        List<Word> products = game.getWordHandler().findAll();
+        assertTrue(products.size() == names.length);
+        products = game.getWordHandler().findRange(2, 2);
+        assertTrue(products.get(0).getWord().equals(names[2]));
 
-        p5.setName("dddddddd");
-        shop.getProductCatalogue().update(p5);
-
-        Product p6 = shop.getProductCatalogue().find(p5.getId());
-        assertTrue(p6.getName().equals(p5.getName()));
     }
-*/
+
+    @Test
+    @InSequence(7)
+    public void testCount() throws Exception {
+        String[] names = "aaa, bbb, ccc, ddd, eee, fff, ggg, hhh".split(",");
+        for (String s : names) {
+            Word p = new Word();
+            p.setWord(s);
+            game.getWordHandler().create(p);
+        }
+        int count = game.getWordHandler().count();
+        assertTrue(count == names.length);
+    }
     
-/*    
+    @Test
+    @InSequence(8)
+    public void testCompareWord() throws Exception{
+        Word w = new Word("wordToTest");
+        game.getWordHandler().create(w);
+        assertTrue(game.getWordHandler().compareWord("wordToTest", w.getId()));
+    }
+
+    @Test
+    @InSequence(9)
+    public void testReadTextFile() throws Exception{
+        game.getWordHandler().openFile();
+        assertTrue(!(game.getWordHandler().findAll().isEmpty()));
+    }
+    
     @Before
     public void setUp() throws Exception {
         clearAll();
     }
-   
-     // Order matters
+
+    // Order matters
     @PersistenceContext(unitName = "com.mycompany_TypingGame_model_jar_1.0-SNAPSHOTPU")
     @Produces
     @Default
@@ -135,8 +170,7 @@ public class TestTypingGame {
         utx.begin();
         em.joinTransaction();
         em.createQuery("delete from Word").executeUpdate();
-     
         utx.commit();
     }
-  */  
+
 }
