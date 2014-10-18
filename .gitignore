@@ -18,3 +18,6 @@ Thumbs.db
 # Maven files
 log/
 target/
+
+# Derby files
+derby.log
