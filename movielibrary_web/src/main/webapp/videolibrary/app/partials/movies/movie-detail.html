@@ -1,0 +1,32 @@
+<div>
+    <!--Body content-->
+    <h2>Movie Detail</h2>
+    <table class="table">
+        <tr>
+            <td>Id</td>
+            <td>
+                <input type="text" value="{{movie.id}}" readonly/>
+            </td>
+        </tr>
+        <tr>
+            <td>Name </td>
+            <td>
+                <input ng-model="movie.name" type="text" value="{{movie.name}}"/>
+            </td>
+        </tr>
+        <tr>
+            <td>Price</td>
+            <td>
+                <input ng-model="movie.price" type="number" value="{{movie.price}}"/>
+            </td>
+        </tr>
+    </table>
+
+
+    <div class="btn-group">
+        <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('movies')"/>
+        <input type="button" value="Delete" class="btn btn-default" ng-click="delete()"/>
+        <input type="button" value="Update" class="btn btn-default" ng-click="update()"/>
+    </div>
+</div>
+

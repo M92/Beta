@@ -1,0 +1,57 @@
+<div>
+    
+    <div>
+        <!--Body content-->
+        <h2>User List</h2>
+        <div class="pull-right">
+            <div class="btn-group">
+                <button class="btn btn-default" ng-disabled="currentPage === 0" 
+                        ng-click="currentPage = currentPage - 1">
+                    Previous
+                </button>
+                <button class="btn btn-default" 
+                        ng-disabled="currentPage >= count / pageSize - 1"
+                        ng-click="currentPage = currentPage + 1"> 
+                    Next
+                </button>
+            </div>
+        </div>
+        <h5>Rows:
+        <select ng-model="pageSize">
+            <option value="4">4</option>
+            <option value="8">8</option>
+            <option value="12">12</option>
+            <option value="16">16</option>
+            <option value="20">20</option>
+        </select>
+        </h5>
+    <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Surname</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users">
+                    <td>{{user.id}}</td>
+                    <td><a href="#/movies/{{user.id}}">{{user.name}}</a></td>
+                    <td>{{user.surname}}</td>
+                </tr>
+            </tbody>
+    </table>
+    <div class="pull-right">
+        <div class="btn-group">
+                <button class="btn btn-default" ng-disabled="currentPage === 0" 
+                        ng-click="currentPage = currentPage - 1">
+                    Previous
+                </button>
+                <button class="btn btn-default" 
+                        ng-disabled="currentPage >= count / pageSize - 1"
+                        ng-click="currentPage = currentPage + 1"> 
+                    Next
+                </button>
+            </div>
+    </div>
+</div>
