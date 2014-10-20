@@ -4,8 +4,8 @@ var app = angular.module('app', [
     'ngRoute'
 ]);
 
-app.config(['$routeProvider',
-    function($routeProvider) {
+app.config(['$routeProvider', '$locationProvider',
+    function($routeProvider, $locationProvider) {
         $routeProvider.
             when('/test-page', {
                 templateUrl: 'partials/test-page.html'
@@ -14,5 +14,7 @@ app.config(['$routeProvider',
                 templateUrl: 'partials/home.html',
                 redirectTo: '/'
             });
+        
+        $locationProvider.html5Mode(true);
     }
 ]);
