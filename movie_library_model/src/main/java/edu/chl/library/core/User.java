@@ -1,6 +1,7 @@
 package edu.chl.library.core;
 
 import edu.chl.library.persistence.AbstractEntity;
+import java.util.List;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -21,6 +22,7 @@ public class User extends AbstractEntity {
     private String lname;
     
     private String email;
+    private List<Movie> movieList;
 
     public User( String fname,
             String lname, String email) {

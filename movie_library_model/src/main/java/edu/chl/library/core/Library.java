@@ -18,7 +18,7 @@ public class Library implements IMovieLibrary {
     @EJB
     private IMovieCatalogue movieCatalogue;
     @EJB
-    private IUser userList;// = OrderBook.newInstance();
+    private IUser userList;
 
     @PostConstruct
     private void init() {

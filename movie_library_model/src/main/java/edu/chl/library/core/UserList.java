@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  * @author hajo
  */
 @Stateless
-public class UserList extends AbstractDAO<Favorite, Long>
+public class UserList extends AbstractDAO<User, Long>
         implements IUser {
 
     @PersistenceContext
@@ -21,12 +21,12 @@ public class UserList extends AbstractDAO<Favorite, Long>
 
     
     // Factory method
-    public static IUser newInstance() {
+  /* public static IUser newInstance() {
         return new UserList();
     }
-
+*/
     public UserList() {
-        super(Favorite.class);
+        super(User.class);
     }
     
 
