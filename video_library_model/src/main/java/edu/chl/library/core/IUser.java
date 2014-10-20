@@ -10,7 +10,7 @@ import javax.ejb.Local;
  * @author hajo
  */
 @Local
-public interface IUser extends IDAO<Movie, Long> {
+public interface IUser extends IDAO<Favorite, Long> {
 
     List<Movie> getByUser(User c);
     

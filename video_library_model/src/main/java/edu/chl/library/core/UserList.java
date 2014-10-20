@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
  * @author hajo
  */
 @Stateless
-public class UserList extends AbstractDAO<Movie, Long>
+public class UserList extends AbstractDAO<Favorite, Long>
         implements IUser {
 
     @PersistenceContext
@@ -26,7 +26,7 @@ public class UserList extends AbstractDAO<Movie, Long>
     }
 
     public UserList() {
-        super(Movie.class);
+        super(Favorite.class);
     }
     
 

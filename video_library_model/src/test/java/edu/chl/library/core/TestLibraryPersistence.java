@@ -35,7 +35,7 @@ import org.junit.runner.RunWith;
  * @author hajo
  */
 @RunWith(Arquillian.class)
-public class TestShopPersistence {
+public class TestLibraryPersistence {
 
     @Inject
     Library library;
