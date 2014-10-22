@@ -15,10 +15,10 @@ movieCatalogueControllers.controller('NavigationCtrl', ['$scope', '$location',
 
 movieCatalogueControllers.controller('MovieListCtrl',['$scope', 'MovieCatalogueProxy',
     
-    function($scope, MovieCatalogueProxy) {
-        $scope.pageSize = '10';
+    function($scope, MoviesCatalogueProxy) {
+        $scope.pageSize = '4';
         $scope.currentPage = 0;
-        MovieCatalogueProxy.count()
+        MoviesCatalogueProxy.count()
                 .success(function(count) {
                     $scope.count = count.value;
                 }).error(function() {
@@ -33,7 +33,7 @@ movieCatalogueControllers.controller('MovieListCtrl',['$scope', 'MovieCatalogueP
         });
         function getRange() {
             var fst = $scope.pageSize * $scope.currentPage;
-            MovieCatalogueProxy.findRange(fst, $scope.pageSize)
+            MoviesCatalogueProxy.findRange(fst, $scope.pageSize)
                     .success(function(movies) {
                         $scope.movies = movies;
                     }).error(function() {
@@ -58,7 +58,7 @@ movieCatalogueControllers.controller('MovieDetailCtrl', ['$scope',
         $scope.update = function() {
             MovieCatalogueProxy.update($routeParams.id, $scope.movie)
                     .success(function() {
-                        $location.path('movies');
+                        $location.path('/movies');
                     }).error(function() {
                 ; // TODO;
             });
@@ -83,9 +83,10 @@ movieCatalogueControllers.controller('MovieNewCtrl', ['$scope',
         $scope.save = function() {
             MovieCatalogueProxy.create($scope.movie)
                     .success(function() {
-                        $location.path('movies');
+                        $location.path('/movies');
                     }).error(function() {
-                ; // TODO;
+                 console.log("save: error");
+
             });
         };
     }]);

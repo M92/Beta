@@ -30,18 +30,14 @@
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Genre</th>
-                    <th>Release Date</th>
-                    <th>Duration</th>
+                    <th>Release Year</th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="movie in movies">
                     <td>{{movie.title}}</td>
                     <td><a href="#/movies/{{movie.id}}">{{movie.title}}</a></td>
-                    <td>{{movie.genre}}</td>
-                    <td>{{movie.releasedate}}</td>
-                    <td>{{movie.duration}}</td>
+                    <td>{{movie.releaseYear}}</td>
                 </tr>
             </tbody>
     </table>

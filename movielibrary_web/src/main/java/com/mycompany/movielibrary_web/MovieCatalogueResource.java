@@ -49,7 +49,7 @@ public class MovieCatalogueResource {
     @POST
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response create(JsonObject data) {
-        Movie p = new Movie(data.getString("title"), data.getInt("releaseDate"));
+        Movie p = new Movie(data.getString("title"), data.getInt("releaseYear"));
         try {
             movieCatalogue.create(p);
             MovieWrapper pw = new MovieWrapper(p);           
@@ -88,7 +88,7 @@ public class MovieCatalogueResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response update(@PathParam(value = "id") Long id, JsonObject json, @Context Request request) {
         try {
-            Movie p = new Movie(json.getString("name"), json.getInt("releaseDate"));
+            Movie p = new Movie(json.getString("title"), json.getInt("releaseYear"));
             movieCatalogue.update(p);
             MovieWrapper pw = new MovieWrapper(p);
             return Response.ok(pw).build();
