@@ -1,8 +1,9 @@
 package com.mycompany.movielibrary_web;
 
 
-import edu.chl.library.core.IMovieCatalogue;
-import edu.chl.library.core.Movie;
+import dat076.group4.model.core.App;
+import dat076.group4.model.core.Movie;
+import dat076.group4.model.dao.IMovieCatalogue;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +32,24 @@ import javax.ws.rs.core.UriInfo;
 //@Path("movies") // Leading trailing slash doesn't matter, see web.xml
 @Path ("/cond")
 public class MovieCatalogueResource {
-   
+   IMovieCatalogue movieCatalogue;
     // Helper class used to build URI's. Injected by container 
     @Context
     private UriInfo uriInfo;
     
     @Inject
-    IMovieCatalogue movieCatalogue;
+    App app;
+    
+    public MovieCatalogueResource(){
+        movieCatalogue = app.getMovieCatalogue();
+    }
     
  
 
     @POST
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response create(JsonObject data) {
-        Movie p = new Movie(data.getString("title"), data.getString("genre"), data.getInt("releaseDate"), data.getInt("playTime"));
+        Movie p = new Movie(data.getString("title"), data.getInt("releaseDate"));
         try {
             movieCatalogue.create(p);
             MovieWrapper pw = new MovieWrapper(p);           
@@ -83,7 +88,7 @@ public class MovieCatalogueResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response update(@PathParam(value = "id") Long id, JsonObject json, @Context Request request) {
         try {
-            Movie p = new Movie(id, json.getString("name"), json.getString("genre"),  json.getInt("releaseDate"),  json.getInt("playTime"));
+            Movie p = new Movie(json.getString("name"), json.getInt("releaseDate"));
             movieCatalogue.update(p);
             MovieWrapper pw = new MovieWrapper(p);
             return Response.ok(pw).build();

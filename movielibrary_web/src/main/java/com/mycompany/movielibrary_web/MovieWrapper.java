@@ -1,7 +1,7 @@
 package com.mycompany.movielibrary_web;
 
 
-import edu.chl.library.core.Movie;
+import dat076.group4.model.core.Movie;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -39,7 +39,7 @@ public class MovieWrapper {
     public Long getId() {
         return movie.getId();
     }
-
+/*
     @XmlElement
     public String getGenre() {
         return movie.getGenre();
@@ -49,4 +49,5 @@ public class MovieWrapper {
     public int getPlayTime() {
         return movie.getPlayTime();
     }
+    */
 }
