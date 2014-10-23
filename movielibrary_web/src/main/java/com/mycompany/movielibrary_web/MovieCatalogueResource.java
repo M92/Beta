@@ -29,8 +29,7 @@ import javax.ws.rs.core.UriInfo;
  *
  * @author hajo
  */
-//@Path("movies") // Leading trailing slash doesn't matter, see web.xml
-@Path ("/cond")
+@Path("movies") // Leading trailing slash doesn't matter, see web.xml
 public class MovieCatalogueResource {
    IMovieCatalogue movieCatalogue;
     // Helper class used to build URI's. Injected by container 
