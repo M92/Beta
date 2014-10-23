@@ -4,6 +4,7 @@ import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.MovieCatalogue;
 import java.util.List;
 import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
@@ -31,10 +32,8 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class TestMovieLibraryPersistence {
-
-    @Inject
-    App app;
     
+    @EJB
     IMovieCatalogue movieCatalogue;
 
     @Resource
@@ -61,7 +60,6 @@ public class TestMovieLibraryPersistence {
     @Before  // Run before each test
     public void before() throws Exception {
         clearAll();
-        movieCatalogue = app.getMovieCatalogue();
     }
  
     @Test
