@@ -5,6 +5,7 @@ import dat076.group4.model.persistence.AbstractEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -27,7 +28,7 @@ public class MovieList extends AbstractEntity {
     public static enum Visibility {
         PRIVATE,
         PUBLIC,
-    }
+    }    
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -38,18 +39,18 @@ public class MovieList extends AbstractEntity {
 
     @Temporal(TemporalType.DATE)
     @Column(name = "CREATION_DATE", nullable = false)
-    private Date creationDate = new Date();
+    private final Date creationDate = new Date();
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Visibility visibility = Visibility.PRIVATE;
 
-    public MovieList() {}
+    protected MovieList() {}
 
     public MovieList(User user) {
         this(user, new ArrayList<Movie>());
     }
-
+   
     public MovieList(User user, List<Movie> movies) {
         this(user, movies, Visibility.PRIVATE);
     }
