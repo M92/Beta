@@ -13,15 +13,15 @@ import javax.persistence.Table;
 @Table(name = "Movies")
 public class Movie extends AbstractEntity {
 
-    @Column(nullable = false)
+    //@Column(nullable = false)
     private String title;
     
-    @Column(nullable = false)
-    private Integer releaseYear;
+    //@Column(nullable = false)
+    private int releaseYear;
 
     public Movie() {}
 
-    public Movie(String title, Integer releaseYear) {
+    public Movie(String title, int releaseYear) {
         this.title = title;
         this.releaseYear = releaseYear;
     }
@@ -34,11 +34,11 @@ public class Movie extends AbstractEntity {
         this.title = title;
     }
 
-    public double getReleaseYear() {
+    public int getReleaseYear() {
         return releaseYear;
     }
 
-    public void setReleaseYear(Integer releaseYear) {
+    public void setReleaseYear(int releaseYear) {
         this.releaseYear = releaseYear;
     }
 
