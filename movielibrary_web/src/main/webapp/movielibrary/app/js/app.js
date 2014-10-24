@@ -17,7 +17,6 @@ movielibrary.config(['$routeProvider',
                 when('/movies', {
                     templateUrl: 'partials/movies/movies.html',
                     controller: 'MovieListCtrl'
-                    
                 }).
                 when('/new', {
                     templateUrl: 'partials/movies/movie-new.html',

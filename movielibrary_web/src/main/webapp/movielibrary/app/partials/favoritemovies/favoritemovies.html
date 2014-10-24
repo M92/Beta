@@ -7,12 +7,12 @@
         <div class="pull-right">
             <div class="btn-group">
                 <button class="btn btn-default" ng-disabled="currentPage === 0" 
-                        ng-click="currentPage = currentPage - 1">
+                        ng-click="currentPage = (currentPage - 1)">
                     Previous
                 </button>
                 <button class="btn btn-default" 
-                        ng-disabled="currentPage >= count / pageSize - 1"
-                        ng-click="currentPage = currentPage + 1"> 
+                        ng-disabled="currentPage >= ((count / pageSize) - 1)"
+                        ng-click="currentPage = (currentPage + 1)"> 
                     Next
                 </button>
             </div>
@@ -44,14 +44,14 @@
     <div class="pull-right">
         <div class="btn-group">
             <button class="btn btn-default" ng-disabled="currentPage === 0" 
-                    ng-click="currentPage = currentPage - 1">
-                Previous
-            </button>
-            <button class="btn btn-default" 
-                    ng-disabled="currentPage >= count / pageSize - 1"
-                    ng-click="currentPage = currentPage + 1"> 
-                Next
-            </button>
+                        ng-click="currentPage = (currentPage - 1)">
+                    Previous
+                </button>
+                <button class="btn btn-default" 
+                        ng-disabled="currentPage >= ((count / pageSize) - 1)"
+                        ng-click="currentPage = (currentPage + 1)"> 
+                    Next
+                </button>
         </div>
     </div>
     

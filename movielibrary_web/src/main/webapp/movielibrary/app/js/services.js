@@ -29,7 +29,7 @@ movieCatalogueService.factory('MovieCatalogueProxy', ['$http',
                     return $http.delete(url + "/" + id);
                 },
                 count: function() {
-                    return $http.get(url + "/max");
+                    return $http.get(url + "/count");
                 }
             };
         }

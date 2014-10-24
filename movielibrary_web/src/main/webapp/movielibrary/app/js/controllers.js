@@ -16,11 +16,12 @@ movieCatalogueControllers.controller('NavigationCtrl', ['$scope', '$location',
 movieCatalogueControllers.controller('MovieListCtrl',['$scope', 'MovieCatalogueProxy',
     
     function($scope, MoviesCatalogueProxy) {
+        $scope.orderProp = 'id';
         $scope.pageSize = '4';
         $scope.currentPage = 0;
         MoviesCatalogueProxy.count()
-                .success(function(max) {
-                    $scope.max = max.value;
+                .success(function(count) {
+                    $scope.count = count.value;
                 }).error(function() {
             console.log("count: error");
         });
