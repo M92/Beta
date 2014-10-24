@@ -4,7 +4,6 @@ package com.mycompany.movielibrary_web;
 import dat076.group4.model.core.Movie;
 import dat076.group4.model.dao.IMovieCatalogue;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
