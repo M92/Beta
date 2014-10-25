@@ -37,7 +37,7 @@ curl -v -H "Accept: application/json" http://localhost:8080/movielibrary_web/web
 
 # *** POST (create) ***
 curl -v -X POST http://localhost:8080/movielibrary_web/webresources/movies --data "title=***POST***&releaseYear=2014"
-curl -v -X POST http://localhost:8080/movielibrary_web/webresources/users --data "title=***POST***&releaseYear=2014"
+curl -v -X POST http://localhost:8080/movielibrary_web/webresources/users/aaa/lists --data "nickname=New list to user"
 curl -v -X POST http://localhost:8080/movielibrary_web/webresources/movielists --data "title=***POST***&releaseYear=2014"
 
 
@@ -49,8 +49,12 @@ curl -v -X PUT http://localhost:8080/movielibrary_web/webresources/movielists/17
 
 # *** DELETE (delete) ***
 curl -v -X DELETE http://localhost:8080/movielibrary_web/webresources/movies/1787
-curl -v -X DELETE http://localhost:8080/movielibrary_web/webresources/users/1787
+//DEL - Ta bort den specifika listan
+curl -v -X DELETE http://localhost:8080/movielibrary_web/webresources/users/aaa/lists/901
+//DEL - Ta bort den specifika filmen från listan
 curl -v -X DELETE http://localhost:8080/movielibrary_web/webresources/users/aaa/lists/839/852
+//DEL - Ta bort usern
+curl -v -X DELETE http://localhost:8080/movielibrary_web/webresources/users/aaa
 curl -v -X DELETE http://localhost:8080/movielibrary_web/webresources/movielists/1787
 
 
