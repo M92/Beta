@@ -39,6 +39,10 @@ movielibrary.config(['$routeProvider',
                     templateUrl: 'partials/movies/movie-new.html',
                     controller: 'MovieNewCtrl'
                 }).
+                when('/home', {
+                    templateUrl: 'partials/home/home.html'
+                    //controller: Not used
+                }).
                 otherwise({
                     redirectTo: '/index.html'
                 });
