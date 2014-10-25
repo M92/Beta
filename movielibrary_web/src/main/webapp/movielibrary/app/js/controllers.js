@@ -103,13 +103,13 @@ movieCatalogueControllers.controller('MovieNewCtrl', ['$scope',
         };
     }]);
 
-/*
+
 //-------------- Controllers for user ---------------------------
 
 userRegisterControllers.controller('UserListCtrl',['$scope', 'UserRegistryProxy',
     
     function($scope, UserRegistryProxy) {
-        $scope.pageSize = '4';
+    /*    $scope.pageSize = '4';
         $scope.currentPage = 0;
         UserRegistryProxy.count()
                 .success(function(max) {
@@ -123,16 +123,24 @@ userRegisterControllers.controller('UserListCtrl',['$scope', 'UserRegistryProxy'
         });
         $scope.$watch('pageSize', function() {
             getRange();
+        });*/
+        
+        UserRegistryProxy.findMovies()
+                .success(function(data) {
+                    $scope.movieList = data;
+                }).error(function() {
+            console.log("findMovies: error");
         });
-        function getRange() {
-            var fst = $scope.pageSize * $scope.currentPage;
-            UserRegistryProxy.findRange(fst, $scope.pageSize)
-                    .success(function(movies) {
-                        $scope.movies = movies;
+        
+         UserRegistryProxy.findAll()
+                    .success(function(data) {
+                        $scope.movieList = data;
                     }).error(function() {
-                console.log("findRange: error");
+            console.log("findAll: error");
             });
-        }
+            //$location.path("movies");
+        
+        
     }]);
 
 
@@ -140,8 +148,8 @@ userRegisterControllers.controller('UserDetailCtrl', ['$scope',
     '$location', '$routeParams', 'UserRegistryProxy',
     function($scope, $location, $routeParams, UserRegistryProxy) {
         UserRegistryProxy.find($routeParams.id).
-            success(function(movie) {
-                $scope.movie = movie;
+            success(function(data) {
+                $scope.userMovie = data;
             }).
             error(function() {
                 console.log("selectByPk: error");
@@ -193,4 +201,3 @@ userRegisterControllers.controller('UserNewCtrl', ['$scope',
             });
         };
     }]);
-*/

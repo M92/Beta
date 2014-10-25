@@ -42,10 +42,10 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="movie in movies">
-                    <td>{{movie.title}}</td>
-                    <td>{{movie.releaseYear}}</td>                   
-                    <td><a href="#/movies/{{movie.id}}">Edit/Delete</a></td>
+                <tr ng-repeat="userMovie in movieList">
+                    <td>{{userMovie.title}}</td>
+                    <td>{{userMovie.releaseYear}}</td>                   
+                    <td><a href="#/movies/{{userMovie.id}}">Edit/Delete</a></td>
                 </tr>
             </tbody>
     </table>
