@@ -41,7 +41,7 @@ public class UserRegistryResource {
 
     
     
-    @DELETE
+    @DELETE //testad ok ! Listorna tas även bort
     @Path(value = "{nickname}")
     public Response deleteUser(@PathParam("nickname") String nickname) {
         try {
@@ -53,8 +53,8 @@ public class UserRegistryResource {
         }
     }
     
-    @POST
-    @Path(value = "{nickname}/lists")
+    @POST // testad ok! 
+    @Path(value = "{nickname}/lists") 
    /* @Consumes(value = MediaType.APPLICATION_JSON)
     public Response create(JsonObject data) {
         Movie p = new Movie(data.getString("title"), data.getInt("releaseYear"));
@@ -72,7 +72,7 @@ public class UserRegistryResource {
         }
     }
 
-    //DEL - Ta bort den specifika listan
+    //DEL - Ta bort den specifika listan - testad ok !
     @DELETE
     @Path(value = "{nickname}/lists/{listId}")
     public Response deleteList(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long id) {
@@ -143,7 +143,7 @@ public class UserRegistryResource {
         }
     }
     
-    //DEL - Ta bort den specifika filmen i listan
+    //DEL - Ta bort den specifika filmen i listan - testad ok
     @DELETE
     @Path(value = "{nickname}/lists/{listId}/{movieId}")
     public Response deleteList(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long listId , @PathParam(value = "movieId") Long movieId) {
