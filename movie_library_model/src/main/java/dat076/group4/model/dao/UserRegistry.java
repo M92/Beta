@@ -5,6 +5,7 @@ import dat076.group4.model.persistence.AbstractDAO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -29,13 +30,22 @@ public class UserRegistry extends AbstractDAO<User, Long>
     }
 
     @Override
-    public List<User> getByName(String name) {
-        List<User> found = new ArrayList<>();
+    public User getByNickname(String name) {
         for (User u : findAll()) {
             if (u.getNickname().equals(name)) {
-                found.add(u);
+                    return u;
             }
         }
-        return found;
+        return null;
+    }  
+
+    @Override
+    public User getByOAuth(Long oauth) {
+         for (User u : findAll()) {
+            if (u.getOAuth().equals(oauth)) {
+                    return u;
+            }
+        }
+        return null;
     }
 }

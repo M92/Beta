@@ -18,19 +18,23 @@ import javax.persistence.Table;
 public class User extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
-    private String nickname;
-
+    private Long oauth;
+    
     @Column(nullable = false, unique = true)
+    private String nickname;
+    
+    /*@Column(nullable = false, unique = true)
     private String email;
-
+*/
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user", orphanRemoval = true)
     private List<MovieList> lists;
     
     protected User() {}
-
-    public User(String nickname, String email) {
+    
+    public User(Long oauth, String nickname) {
+        this.oauth = oauth;
         this.nickname = nickname;
-        this.email = email;
+      //  this.email = email;
         lists = new ArrayList<>();
     }
 
@@ -44,6 +48,10 @@ public class User extends AbstractEntity {
         return list;
     }
     
+    public Long getOAuth(){
+        return oauth;
+    }
+    
     public List<MovieList> getLists(){
         return lists;
     }
@@ -51,13 +59,18 @@ public class User extends AbstractEntity {
     public String getNickname() {
         return nickname;
     }
+ 
 
+   /* public void setEmail(String email) {
+        this.email = email;
+    }
+    
     public String getEmail() {
         return email;
     }
-
+*/
     @Override
     public String toString() {
-        return "User{" + "id=" + getId() + ", " + "nickname=" + nickname + ", email=" + email + '}';
+        return "User{" + "id=" + getId() + ", " + "nickname=" + nickname + '}';
     }
 }

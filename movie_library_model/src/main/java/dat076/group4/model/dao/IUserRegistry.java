@@ -11,6 +11,6 @@ import javax.ejb.Local;
  */
 @Local
 public interface IUserRegistry extends IDAO<User, Long> {
-
-    List<User> getByName(String name);
+    User getByOAuth (Long oath);
+    User getByNickname(String nickname);
 }

@@ -44,6 +44,6 @@ public class Movie extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "Movie{" + "id=" + getId() + ", title=" + title + ", releaseYear=" + releaseYear + '}';
+        return "Movie{" + " id=" + getId() + ", title=" + title + ", releaseYear=" + releaseYear + '}';
     }
 }

@@ -13,17 +13,23 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Id private Long id;
-
-    public long getId() {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;  //primary key
+   
+    protected AbstractEntity(){
+    }
+    
+    
+   // @Override
+    public Long getId(){
         return id;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + Objects.hashCode(id);
+        hash = 43 * hash + Objects.hashCode(this.id);
         return hash;
     }
 

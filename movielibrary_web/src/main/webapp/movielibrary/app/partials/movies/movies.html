@@ -21,8 +21,8 @@
                     Previous
                 </button>
                 <button class="btn btn-default" 
-                        ng-disabled="currentPage >= (count / pageSize - 1)"
-                        ng-click="currentPage = (currentPage + 1)"> 
+                        ng-disabled="currentPage >= count / pageSize - 1"
+                        ng-click="currentPage = currentPage + 1"> 
                     Next
                 </button>
             </div>
@@ -48,20 +48,20 @@
             <tbody>
                 <tr ng-repeat="movie in movies">
                     <td>{{movie.title}}</td>
-                    <td>{{movie.releaseYear}}</td>                   
-                    <td><a href="#/movies/{{movie.id}}">Edit/Delete</a></td>
+                    <td>{{movie.releaseYear}}</td>
+                    <td><a href="#/movies/{{movie.id}}">Edit/Delete</td>
                 </tr>
             </tbody>
     </table>
         <div class="pull-right">
             <div class="btn-group">
                 <button class="btn btn-default" ng-disabled="currentPage === 0" 
-                        ng-click="currentPage = (currentPage - 1)">
+                        ng-click="currentPage = currentPage - 1">
                     Previous
                 </button>
                 <button class="btn btn-default" 
-                        ng-disabled="currentPage >= ((count / pageSize) - 1)"
-                        ng-click="currentPage = (currentPage + 1)"> 
+                        ng-disabled="currentPage >= count / pageSize - 1"
+                        ng-click="currentPage = currentPage + 1"> 
                     Next
                 </button>
             </div>

@@ -34,14 +34,13 @@ public class MovieCatalogueResource {
     private UriInfo uriInfo;
  
     @POST
-   @Consumes(value = MediaType.APPLICATION_JSON)
+   /* @Consumes(value = MediaType.APPLICATION_JSON)
     public Response create(JsonObject data) {
         Movie p = new Movie(data.getString("title"), data.getInt("releaseYear"));
-       /*
+       */ 
     @Consumes(value = MediaType.APPLICATION_FORM_URLENCODED)
     public Response create(@FormParam("title") String title, @FormParam("releaseYear") int releaseYear) {
         Movie p = new Movie(title, releaseYear);
-        */
         try {
             movieCatalogue.create(p);
             URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(p.getId())).build(p);
@@ -77,11 +76,9 @@ public class MovieCatalogueResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response update(@PathParam(value = "id") Long id, JsonObject json, @Context Request request) {
        try {
-            Movie p = movieCatalogue.find(id);
-            p.setTitle(json.getString("title"));
-            p.setReleaseYear(json.getInt("releaseYear"));
+            Movie p = new Movie(json.getString("title"), json.getInt("releaseYear"));
             movieCatalogue.update(p);
-            MovieWrapper pw = new MovieWrapper(p);
+            MovieCatalogueWrapper pw = new MovieCatalogueWrapper(p);
             return Response.ok(pw).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
@@ -102,7 +99,7 @@ public class MovieCatalogueResource {
     public Response find(@PathParam("id") Long id, @Context Request request) {
        Movie m = movieCatalogue.find(id);
         if (m != null) {
-            MovieWrapper mw = new MovieWrapper(m);
+            MovieCatalogueWrapper mw = new MovieCatalogueWrapper(m);
             return Response.ok(mw).build();
         } else {
             return Response.noContent().build();
@@ -119,12 +116,12 @@ public class MovieCatalogueResource {
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
-        List<MovieWrapper> pwList = new ArrayList<>();
+        List<MovieCatalogueWrapper> pwList = new ArrayList<>();
         List<Movie> prodList = movieCatalogue.findAll();
         for (Movie p : prodList) {
-            pwList.add(new MovieWrapper(p));
+            pwList.add(new MovieCatalogueWrapper(p));
         }
-        GenericEntity<List<MovieWrapper>> ge = new GenericEntity<List<MovieWrapper>>(pwList) {
+        GenericEntity<List<MovieCatalogueWrapper>> ge = new GenericEntity<List<MovieCatalogueWrapper>>(pwList) {
         };
         return Response.ok(ge).build();
        /* GenericEntity<List<Movie>> ge = new GenericEntity<List<Movie>>(movieCatalogue.findAll()) {
@@ -136,12 +133,12 @@ public class MovieCatalogueResource {
     @Path("range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam("fst") int fst, @QueryParam("max") int n) {
-        List<MovieWrapper> wrapList = new ArrayList<>();
+        List<MovieCatalogueWrapper> wrapList = new ArrayList<>();
         List<Movie> pList = movieCatalogue.findRange(fst, n);
         for (Movie p : pList) {
-            wrapList.add(new MovieWrapper(p));
+            wrapList.add(new MovieCatalogueWrapper(p));
         }
-        GenericEntity<List<MovieWrapper>> ge = new GenericEntity<List<MovieWrapper>>(wrapList) {
+        GenericEntity<List<MovieCatalogueWrapper>> ge = new GenericEntity<List<MovieCatalogueWrapper>>(wrapList) {
         };
         return Response.ok(ge).build();
         

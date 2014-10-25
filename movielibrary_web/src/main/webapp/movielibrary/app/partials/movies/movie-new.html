@@ -5,20 +5,20 @@
         <tr>
             <td>Title</td>
             <td>
-                <input ng-model="movie.title" type="text" value="{{movie.title}}"/>
+                <input ng-model="movie.title" type="text" value=""/>
             </td>
         </tr>
         <tr>
             <td>Release Year</td>
             <td>
-                <input ng-model="movie.releaseYear" type="number" value="{{movie.releaseYear}}"/>
+                <input ng-model="movie.releaseYear" type="number" value=""/>
             </td>
         </tr>
     </table>
 
 
     <div class="btn-group">
-        <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('/movies')"/>
+        <input type="button" value="Cancel" class="btn btn-default" ng-controller="NavigationCtrl" ng-click="navigate('movies')"/>
         <input type="button" value="Save" class="btn btn-default" ng-click="save()"/>
     </div>
 </div>

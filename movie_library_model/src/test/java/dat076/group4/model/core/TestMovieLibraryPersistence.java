@@ -3,19 +3,18 @@ package dat076.group4.model.core;
 import dat076.group4.model.dao.IListCatalogue;
 import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
-import dat076.group4.model.dao.MovieCatalogue;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.enterprise.inject.Default;
 import javax.enterprise.inject.Produces;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -164,7 +163,7 @@ public class TestMovieLibraryPersistence {
     
     @Test
     public void testCreateUser() throws Exception{
-        User user = new User("apa","sfs");
+        User user = new User(new Long(1),"aaa");
         userRegistry.create(user);
         assertTrue(userRegistry.findAll().size() > 0);
     }
@@ -173,7 +172,7 @@ public class TestMovieLibraryPersistence {
     public void testPersistCreateListCatalogue() throws Exception{
         List<Movie> items = new ArrayList<>();
         Movie m = new Movie("hihih", 2);
-        User user = new User("","");
+        User user = new User(new Long(2),"bbb");
         
         movieCatalogue.create(m);
         userRegistry.create(user);
@@ -188,8 +187,8 @@ public class TestMovieLibraryPersistence {
         List<MovieList> movieLists = listCatalogue.findAll();
 
         assertTrue(movieLists.size() > 0);
-        assertTrue(users.get(0).getId() == user.getId());
-        assertTrue(movies.get(0).getId()== (m.getId()));
+        assertEquals(users.get(0).getId(), user.getId() );
+        assertEquals(movies.get(0).getId(), m.getId() );
     }
     
     @Test
@@ -198,7 +197,7 @@ public class TestMovieLibraryPersistence {
          //Movie p, User c, Movie item must be cascaded (Must be persistent)
         //Ex in ProductCatalogue @ManyToOne(cascade = CascadeType.PERSIST)
         Movie m = new Movie("eee", 555);
-        User user = new User("namee", "tttt");
+        User user = new User(new Long(3),"ccc");
         movieCatalogue.create(m);
         userRegistry.create(user);
         
@@ -224,7 +223,7 @@ public class TestMovieLibraryPersistence {
          //Movie p, User c, Movie item must be cascaded (Must be persistent)
         //Ex in ProductCatalogue @ManyToOne(cascade = CascadeType.PERSIST)
         Movie m = new Movie("eee", 555);
-        User user = new User("namee", "tttt");
+        User user = new User(new Long(4),"ddd");
         movieCatalogue.create(m);
         userRegistry.create(user);
         
@@ -249,7 +248,7 @@ public class TestMovieLibraryPersistence {
     
     @Test
     public void testCascadeList() throws Exception{
-        User user = new User("namee", "tttt");
+        User user = new User(new Long(5),"eee");
         user.addList(new MovieList(user, new ArrayList<Movie>()));
         userRegistry.create(user);
         
@@ -260,16 +259,18 @@ public class TestMovieLibraryPersistence {
     
     @Test
     public void testCreateNewListUser() throws Exception{
-        User user = new User("namee", "tttt");
+        User user = new User(new Long(6),"fff");
         user.newList();
         userRegistry.create(user);
         
         assertTrue(!listCatalogue.findAll().isEmpty());
         userRegistry.delete(user.getId());
-        assertTrue(listCatalogue.findAll().isEmpty());        
+        assertTrue(listCatalogue.findAll().isEmpty());    
+     
     }
     
     @Test
+    @InSequence(16)
     public void testMovieBulkUpdate() throws Exception {
         int count = 50;
         for (int i = 0; i < count; i++) {
