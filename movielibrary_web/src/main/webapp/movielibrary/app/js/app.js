@@ -17,7 +17,6 @@ movielibrary.config(['$routeProvider',
                 when('/movies', {
                     templateUrl: 'partials/movies/movies.html',
                     controller: 'MovieListCtrl'
-                    
                 }).
                 when('/new', {
                     templateUrl: 'partials/movies/movie-new.html',
@@ -39,6 +38,15 @@ movielibrary.config(['$routeProvider',
                     templateUrl: 'partials/movies/movie-new.html',
                     controller: 'MovieNewCtrl'
                 }).
+                // Dunno the above is for or what i shouldnt remove   
+                    when('/:nickname/lists/:listId', {
+                    templateUrl: 'partials/users/users.html',
+                    controller: 'UserListCtrl'
+                }).
+                    when('/nickname/lists', {
+                    templateUrl: 'partials/users/users.html',
+                    controller: 'UserListCtrl'
+                }).    
                 when('/home', {
                     templateUrl: 'partials/home/home.html'
                     //controller: Not used

@@ -36,7 +36,7 @@ movieCatalogueService.factory('MovieCatalogueProxy', ['$http',
         }
     ]
 );
-/*
+
 userRegistryService.factory('UserRegisterProxy', ['$http',
         function($http) {
             var listUrl = 'http://localhost:8080/movielibrary_web/webresources/users';
@@ -44,10 +44,10 @@ userRegistryService.factory('UserRegisterProxy', ['$http',
             return {
                 
                 findAll: function() {
-                    return $http.get(listUrl);
+                    return $http.get(listUrl + "/nickname/lists");
                 },
-                findRange: function(first, max) {
-                    return $http.get(listUrl + "/range?fst=" + first + "&max=" + max);
+                findMovies: function() {
+                    return $http.get(listUrl + "/?nickname/lists/?listId");
                 },
                 find: function(id) {
                     return $http.get(listUrl + "/" + id);
@@ -63,13 +63,9 @@ userRegistryService.factory('UserRegisterProxy', ['$http',
                 },
                 deleteUser: function(id) {
                     return $http.delete(userUrl + "/" + id);
-                },
-                count: function() {
-                    return $http.get(listUrl + "/max");
                 }
             };
         }
     ]
 );
 
-*/
