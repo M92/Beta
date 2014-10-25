@@ -7,6 +7,24 @@
     <!-- Rewrites for Angular -->
 
     <rule>
+        <from>/movies</from>
+        <to>/index.html</to>
+    </rule>
+    <rule>
+        <from>/movies/**</from>
+        <to>/index.html</to>
+    </rule>
+
+    <rule>
+        <from>/movies/search</from>
+        <to>/index.html</to>
+    </rule>
+    <rule>
+        <from>/movies/search/**</from>
+        <to>/index.html</to>
+    </rule>
+
+    <rule>
         <from>/test-page</from>
         <to>/index.html</to>
     </rule>

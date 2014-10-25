@@ -1,0 +1,72 @@
+<div>
+    <form class="navbar-form navbar-left" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search movie title..." ng-model="q">
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" ng-controller="NavigationCtrl"
+                        ng-click="navigate('movies/search/' + q)">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+        <label style="margin: 10px">Search results: {{count}}</label>
+    </form>
+</div>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Run Time</th>
+            <th>Critics Score</th>
+            <th>Audience Score</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="movie in movies">
+            <td><img src="{{movie.posters.thumbnail}}" width="40" alt="thumbnail"/></td>
+            <td><a href="movies/{{movie.id}}">{{movie.title}} ({{movie.year}})</a></td>
+            <td>{{movie.runtime}} min</td>
+            <td>{{movie.ratings.critics_score}}%</td>
+            <td>{{movie.ratings.audience_score}}%</td>
+            <td>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="add-to-list" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-star"></span>
+                        Add to list
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="add-to-list">
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">c00l movies</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">my best flicks</a></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Worst ever</a></li>
+                        <li role="presentation" class="divider"></li>
+                        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">New list</a></li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<div class="form-group form-inline pull-right">
+    <label for="rows">Rows&nbsp;</label>
+    <select id="rows" ng-model="pageSize" class="form-control">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+    </select>
+</div>
+<div class="btn-group">
+    <button class="btn btn-default"
+            ng-disabled="currentPage < 1"
+            ng-click="currentPage = currentPage - 1">
+        Prev
+    </button>
+    <button class="btn btn-default" 
+            ng-disabled="currentPage >= count / pageSize - 1"
+            ng-click="currentPage = currentPage + 1"> 
+        Next
+    </button>
+</div>
