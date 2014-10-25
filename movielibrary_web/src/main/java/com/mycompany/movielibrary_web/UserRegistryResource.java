@@ -1,6 +1,9 @@
 package com.mycompany.movielibrary_web;
 
+import dat076.group4.model.core.Movie;
+import dat076.group4.model.core.MovieList;
 import dat076.group4.model.core.User;
+import dat076.group4.model.dao.IListCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
 import java.net.URI;
 import java.util.ArrayList;
@@ -15,7 +18,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
@@ -32,116 +34,167 @@ public class UserRegistryResource {
 
     @EJB
     IUserRegistry userRegistry;
+    
     // Helper class used to build URI's. Injected by container 
     @Context
     private UriInfo uriInfo;
-/*
-    @POST
-    /* @Consumes(value = MediaType.APPLICATION_JSON)
-     public Response create(JsonObject data) {
-     User p = new User(data.getString("title"), data.getInt("releaseYear"));
-     */
-    /*
-    @Consumes(value = MediaType.APPLICATION_FORM_URLENCODED)
-    public Response create(@FormParam("title") String title, @FormParam("releaseYear") int releaseYear) {
-        User p = new User(title, releaseYear);
-        try {
-            userRegistry.create(p);
-            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(p.getId())).build(p);
-            return Response.created(uri).build();
-        } catch (IllegalArgumentException e) {
-            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-        }*/
-        /*   try {
-         User p = new User(title, releaseYear);
-         userRegistry.create(p);
-         MovieWrapper pw = new MovieWrapper(p);
-         return Response.ok(pw).build();
-         } catch (IllegalArgumentException e) {
-         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-         }
-         
-    }*/
 
+    
+    
     @DELETE
-    @Path(value = "{id}")
-    public Response delete(@PathParam("id") Long id) {
+    @Path(value = "{nickname}")
+    public Response deleteUser(@PathParam("nickname") String nickname) {
         try {
-            userRegistry.delete(id);
+            User user = userRegistry.getByNickname(nickname);
+            userRegistry.delete(user.getId());
             return Response.ok().build();
         } catch (IllegalArgumentException e) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    @PUT
-    @Path(value = "{id}/lists/{id2}")
-    @Consumes(value = MediaType.APPLICATION_JSON)
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response update(@PathParam(value = "id") Long id, JsonObject json) {
+    
+    @POST
+    @Path(value = "{nickname}/lists")
+   /* @Consumes(value = MediaType.APPLICATION_JSON)
+    public Response create(JsonObject data) {
+        Movie p = new Movie(data.getString("title"), data.getInt("releaseYear"));
+       */ 
+    @Consumes(value = MediaType.APPLICATION_FORM_URLENCODED) //Lägg till en ny lista i listan
+    public Response create(@PathParam("nickname") String nickname) {
+       User u = userRegistry.getByNickname(nickname);
         try {
-            User u = userRegistry.find(id);
-          //  u.setEmail(json.getString("email"));
-            json.getJsonObject(String.valueOf(id));
+            u.newList();
+            userRegistry.update(u);
+            URI uri = uriInfo.getAbsolutePathBuilder().path(String.valueOf(u.getId())).build(u);
+            return Response.created(uri).build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    //DEL - Ta bort den specifika listan
+    @DELETE
+    @Path(value = "{nickname}/lists/{listId}")
+    public Response deleteList(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long id) {
+        try {
+            User u = userRegistry.getByNickname(nickname);
+            u.deleteMovieList(id);
+            userRegistry.update(u);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    
+    //Hämta alla listor usern har - testat ok
+    @GET
+    @Path(value = "{nickname}/lists")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findAll(@PathParam(value = "nickname") String nickname) {
+        List<UserRegistryWrapper> pwList = new ArrayList<>();
+        List<User> userList = userRegistry.findAll();
+        for (User u : userList){
+            pwList.add(new UserRegistryWrapper(u));
+            }
+        GenericEntity<List<UserRegistryWrapper>> ge = new GenericEntity<List<UserRegistryWrapper>>(pwList) {
+        };
+        return Response.ok(ge).build();
+    }
+        
+    //Ta bort den specifika listan
+    /*@GET
+    @Path(value = "{nickname}/lists/{id}")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findList(@PathParam(value = "nickname") String nickname, @PathParam(value = "id") Long id) {
+        User user = userRegistry.getByNickname(nickname);
+        if (user != null) {
+            MovieList movieList = user.getList(id);
+            ListCatalogueWrapper lcw = new ListCatalogueWrapper(movieList);
+            return Response.ok(lcw).build();
+        }
+        return Response.noContent().build();
+    }
+    
+  */
+    
+   
+    
+      //----- we are now inside the specific list ------
+
+    
+    
+    @PUT //testad ok
+    @Path(value = "{nickname}/lists/{listId}")
+    /* @Consumes(value = MediaType.APPLICATION_JSON)
+     public Response create(JsonObject data) {
+     Movie p = new Movie(data.getString("title"), data.getInt("releaseYear"));
+     */
+    @Consumes(value = MediaType.APPLICATION_FORM_URLENCODED) //Lägg till en ny lista i listan
+    public Response addMovie(@PathParam("nickname") String nickname, @PathParam("listId") Long id, @FormParam("title") String title, @FormParam("releaseYear") int releaseYear) {
+        User u = userRegistry.getByNickname(nickname);
+        try {
+            MovieList movieList = u.getList(id);
+            movieList.addMovie(new Movie(title, releaseYear));
             userRegistry.update(u);
             UserRegistryWrapper uw = new UserRegistryWrapper(u);
             return Response.ok(uw).build();
         } catch (IllegalArgumentException e) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
-
-        /*  try {
-         User p = new User(json.getString("title"), json.getInt("releaseYear"));
-         userRegistry.update(p);
-         return Response.ok(p).build();
-
-         } catch (IllegalArgumentException e) {
-         return Response.status(Status.INTERNAL_SERVER_ERROR).build();
-         }
-         */
     }
-
-    @GET
-    @Path(value = "{id}")
-    @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response find(@PathParam("id") Long id) {
-        User m = userRegistry.find(id);
-        if (m != null) {
-            UserRegistryWrapper mw = new UserRegistryWrapper(m);
-            return Response.ok(mw).build();
-        } else {
-            return Response.noContent().build();
+    
+    //DEL - Ta bort den specifika filmen i listan
+    @DELETE
+    @Path(value = "{nickname}/lists/{listId}/{movieId}")
+    public Response deleteList(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long listId , @PathParam(value = "movieId") Long movieId) {
+        try {
+            User u = userRegistry.getByNickname(nickname);
+            MovieList movieList = u.getList(listId);
+            movieList.deleteMovie(movieId);
+            
+            userRegistry.update(u);
+            return Response.ok().build();
+        } catch (IllegalArgumentException e) {
+            return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
-
-        /*  User p = userRegistry.find(id);
-         if (p != null) {
-         return Response.ok(p).build();
-         } else {
-         return Response.noContent().build();
-         }
-
-         */
     }
-
-    @GET
+    
+    //GET - hämta filmen {id} listan
+   /* @GET
+    @Path(value = "{nickname}/lists/{listId}")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findAll() {
-        List<UserRegistryWrapper> pwList = new ArrayList<>();
-        List<User> prodList = userRegistry.findAll();
-        for (User p : prodList) {
-            pwList.add(new UserRegistryWrapper(p));
+    public Response findMovie(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long listId , @PathParam(value = "movieId") Long movieId) {
+        User user = userRegistry.getByNickname(nickname);
+        MovieList movieList = user.getList(listId);
+        for(Movie m : movieList.getMovies()){
+            if(m.getId().equals(movieId)){
+                UserRegistryWrapper mw = new UserRegistryWrapper(user);
+                return Response.ok(mw).build();
+            }
         }
-        GenericEntity<List<UserRegistryWrapper>> ge = new GenericEntity<List<UserRegistryWrapper>>(pwList) {
-        };
+        return Response.noContent().build(); 
+    }*/
+    
+    
+    //Hitta alla filmer i listan - testat ok
+    @GET
+    @Path(value = "{nickname}/lists/{listId}")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findAllMovies(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long listId) {
+        List<MovieCatalogueWrapper> pwList = new ArrayList<>();
+        User user = userRegistry.getByNickname(nickname);
+        MovieList movieList = user.getList(listId);
+        
+        for(Movie m : movieList.getMovies()){
+            pwList.add(new MovieCatalogueWrapper(m));
+        }
+        GenericEntity<List<MovieCatalogueWrapper>> ge = new GenericEntity<List<MovieCatalogueWrapper>>(pwList){};
         return Response.ok(ge).build();
-        /* GenericEntity<List<User>> ge = new GenericEntity<List<User>>(userRegistry.findAll()) {
-         };
-         return Response.ok(ge).build();
-         return Response.ok(ge).build();*/
     }
-
+    
+    /*
     @GET
-    @Path("range")
+    @Path("{nickname}//range")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findRange(@QueryParam("fst") int fst, @QueryParam("max") int n) {
         List<UserRegistryWrapper> wrapList = new ArrayList<>();
@@ -152,19 +205,17 @@ public class UserRegistryResource {
         GenericEntity<List<UserRegistryWrapper>> ge = new GenericEntity<List<UserRegistryWrapper>>(wrapList) {
         };
         return Response.ok(ge).build();
-
-        /* GenericEntity<List<User>> ge = new GenericEntity<List<User>>(userRegistry.findRange(fst, n)) {
-         };
-         return Response.ok(ge).build();*/
-    }
-
+    }*/
+/*
     @GET
-    @Path(value = "count")
+    @Path(value = "{nickname}/lists/{listId}/count")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response count() {
-        int c = userRegistry.count();
+    public Response count(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long id) {
+        User user = userRegistry.getByNickname(nickname);
+        MovieList movieList = user.getList(id);
+        int c = movieList.size();
         JsonObject value = Json.createObjectBuilder().add("value", c).build();
         return Response.ok(value).build();
     }
-
+*/
 }

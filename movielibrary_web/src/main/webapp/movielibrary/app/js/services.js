@@ -3,6 +3,7 @@
 /* Services */
 
 var movieCatalogueService = angular.module('MovieCatalogueService', []);
+var userRegistryService = angular.module('UserRegistryService', []);
 
 // Representing the remote RESTful MovieCatalogue
 movieCatalogueService.factory('MovieCatalogueProxy', ['$http',
@@ -35,4 +36,40 @@ movieCatalogueService.factory('MovieCatalogueProxy', ['$http',
         }
     ]
 );
+/*
+userRegistryService.factory('UserRegisterProxy', ['$http',
+        function($http) {
+            var listUrl = 'http://localhost:8080/movielibrary_web/webresources/users';
 
+            return {
+                
+                findAll: function() {
+                    return $http.get(listUrl);
+                },
+                findRange: function(first, max) {
+                    return $http.get(listUrl + "/range?fst=" + first + "&max=" + max);
+                },
+                find: function(id) {
+                    return $http.get(listUrl + "/" + id);
+                },
+                update: function(id, movie) {
+                    return $http.put(listUrl + "/" + id, movie);
+                },
+                create: function(movie) {
+                    return $http.post(listUrl, movie);
+                },
+                deleteList: function(id) {
+                    return $http.delete(listUrl + "/" + id);
+                },
+                deleteUser: function(id) {
+                    return $http.delete(userUrl + "/" + id);
+                },
+                count: function() {
+                    return $http.get(listUrl + "/max");
+                }
+            };
+        }
+    ]
+);
+
+*/

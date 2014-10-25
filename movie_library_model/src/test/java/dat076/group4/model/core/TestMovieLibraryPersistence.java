@@ -161,12 +161,7 @@ public class TestMovieLibraryPersistence {
         assertTrue(count == movieCatalogue.count());
     }
     
-    @Test
-    public void testCreateUser() throws Exception{
-        User user = new User(new Long(1),"aaa");
-        userRegistry.create(user);
-        assertTrue(userRegistry.findAll().size() > 0);
-    }
+   
 
     @Test
     public void testPersistCreateListCatalogue() throws Exception{
@@ -266,8 +261,16 @@ public class TestMovieLibraryPersistence {
         assertTrue(!listCatalogue.findAll().isEmpty());
         userRegistry.delete(user.getId());
         assertTrue(listCatalogue.findAll().isEmpty());    
-     
     }
+
+    @Test
+    @InSequence(15)
+    public void testCreateUser() throws Exception{
+        User user = new User(new Long(1),"aaa");
+        userRegistry.create(user);
+        assertTrue(userRegistry.findAll().size() > 0);
+    }
+    
     
     @Test
     @InSequence(16)
@@ -281,6 +284,11 @@ public class TestMovieLibraryPersistence {
         int updateCount = em.createQuery(
                 "UPDATE Movie m SET m.releaseYear = 200 WHERE m.releaseYear = 100")
                 .executeUpdate();
+        
+        User user = new User(new Long(1),"aaa");
+        user.addList(new MovieList(user));
+        userRegistry.create(user);
+        
         utx.commit();
         assertTrue(updateCount == count);
         assertTrue(movieCatalogue.getByYear(200).size() == count);

@@ -69,6 +69,23 @@ public class MovieList extends AbstractEntity {
         return movies;
     }
 
+    public void addMovie(Movie movie){
+        movies.add(movie);
+    }
+    
+    public void deleteMovie(Long id) {
+        for (int i = 0; i < movies.size(); i++) {
+            if (movies.get(i).getId().equals(id)) {
+                movies.remove(i);
+            }
+        }
+
+    }
+    
+    public int size(){
+        return movies.size();
+    }
+    
     public Date getCreationDate() {
         return creationDate;
     }

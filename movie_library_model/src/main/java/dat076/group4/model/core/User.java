@@ -42,6 +42,24 @@ public class User extends AbstractEntity {
         lists.add(list);
     }
 
+    public void deleteMovieList(Long id){
+        for (MovieList list : lists){
+            if(list.getId().equals(id)){
+                lists.remove(list);
+                break;
+            }
+        }
+    }
+    
+    public MovieList getList(Long id){
+        for (MovieList list : lists){
+            if(list.getId().equals(id)){
+                return list;
+            }
+        }
+        return null;
+    }
+    
     public MovieList newList() {
         MovieList list = new MovieList(this);
         lists.add(list);
