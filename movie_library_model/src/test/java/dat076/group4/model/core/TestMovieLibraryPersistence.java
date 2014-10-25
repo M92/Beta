@@ -275,20 +275,30 @@ public class TestMovieLibraryPersistence {
     @Test
     @InSequence(16)
     public void testMovieBulkUpdate() throws Exception {
+        utx.begin(); 
+        String[] titles = "aaa, bbb, ccc, ddd, eee, fff, ggg, hhh".split(",");
+        List<Movie> listOfMovies = new ArrayList<>();
+        for(String s : titles){
+            Movie m = new Movie(s, 2000);
+            listOfMovies.add(m);
+            movieCatalogue.create(m);
+        }
+        
         int count = 50;
         for (int i = 0; i < count; i++) {
             Movie p = new Movie("Bulk"+i, 100);
             movieCatalogue.create(p);
         }
-        utx.begin();  
+         
         int updateCount = em.createQuery(
                 "UPDATE Movie m SET m.releaseYear = 200 WHERE m.releaseYear = 100")
                 .executeUpdate();
         
         User user = new User(new Long(1),"aaa");
-        user.addList(new MovieList(user));
+        MovieList list = new MovieList(user, listOfMovies);
+        list.setVisibility(MovieList.Visibility.PUBLIC);
+        user.addList(list);
         userRegistry.create(user);
-        
         utx.commit();
         assertTrue(updateCount == count);
         assertTrue(movieCatalogue.getByYear(200).size() == count);
