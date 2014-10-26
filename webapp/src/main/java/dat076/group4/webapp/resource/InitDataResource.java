@@ -1,5 +1,6 @@
 package dat076.group4.webapp.resource;
 
+import dat076.group4.model.core.User;
 import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
 
@@ -27,6 +28,25 @@ public class InitDataResource {
 
         try {
             // init data
+    
+            User a = new User(2845110303L , "adamlindberg076");
+            User b = new User(2845389945L , "linuxuser5");
+            User c = new User(2845633529L , "webapp3");
+            User d = new User(2845674219L , "elderbage");
+            User e = new User(2845729306L , "userguden1");				
+            User f = new User(2845677567L , "viddeoh");
+            User g = new User(2845679313L , "hejagoran");
+
+
+            userRegistry.create(a);
+            userRegistry.create(b);
+            userRegistry.create(c);
+            userRegistry.create(d);
+            userRegistry.create(e);
+            userRegistry.create(f);
+            userRegistry.create(g);
+            
+            
         } catch (Exception e) {
             return Response.ok(Json.createObjectBuilder().add("init", "Exception").build()).build();
         }
