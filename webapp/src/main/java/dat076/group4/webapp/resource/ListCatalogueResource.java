@@ -44,7 +44,7 @@ public class ListCatalogueResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findPublic(@PathParam("id") Long id) {
         MovieList list = listCatalogue.find(id);
-        if (list.getVisibility() == Visibility.PUBLIC) {
+        if (list != null && list.getVisibility() == Visibility.PUBLIC) {
             return Response.ok(new MovieListWrapper(list)).build();
         } else {
             return Response.noContent().build();
