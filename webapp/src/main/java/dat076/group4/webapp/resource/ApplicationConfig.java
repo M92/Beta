@@ -25,6 +25,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(dat076.group4.webapp.auth.UserFilter.class);
         resources.add(dat076.group4.webapp.resource.GenericResource.class);
+        resources.add(dat076.group4.webapp.resource.InitDataResource.class);
         resources.add(dat076.group4.webapp.resource.SessionResource.class);
     }
 }
