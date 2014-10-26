@@ -5,10 +5,12 @@
 	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	 version="3.1">
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>240</session-timeout>
     </session-config>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/index.html</location>
+    </error-page>
     <filter>
         <filter-name>UrlRewriteFilter</filter-name>
         <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
