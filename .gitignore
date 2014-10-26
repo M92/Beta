@@ -21,3 +21,6 @@ target/
 
 # Derby files
 derby.log
+
+# API keys
+oauth_consumer.properties
