@@ -1,7 +1,12 @@
 package com.mycompany.movielibrary_web;
 
 
+import dat076.group4.model.core.Movie;
 import dat076.group4.model.core.MovieList;
+import dat076.group4.model.core.MovieList.Visibility;
+import dat076.group4.model.core.User;
+import java.util.Date;
+import java.util.List;
 import javax.xml.bind.annotation.*;
 
 /**
@@ -15,9 +20,10 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.PROPERTY)
 @XmlType(name = "MovieList", propOrder = {
-    "id",
-    "title",
-    "releaseYear"
+    "user",
+    "movies",
+    "creationDate",
+    "visibility"
 })
 public class ListCatalogueWrapper {
 
@@ -29,10 +35,10 @@ public class ListCatalogueWrapper {
     public ListCatalogueWrapper(MovieList movieList) { 
         this.movieList = movieList; 
     }
-    /*
+    
     @XmlElement
-    public MovieList getMovie() {
-        return movieList.getMovies();
+    public User getUser() {
+        return movieList.getUser();
     }
 
     @XmlElement //If serving XML we should use @XmlAttribute 
@@ -41,7 +47,17 @@ public class ListCatalogueWrapper {
     }
 
     @XmlElement
-    public int getReleaseYear() {
-        return movieList.getReleaseYear();
-    }*/
+    public List<Movie> getMovies() {
+        return movieList.getMovies();
+    }
+    
+    @XmlElement
+    public Date getCreationDate() {
+        return movieList.getCreationDate();
+    }
+    
+    @XmlElement
+    public Visibility getVisibility() {
+        return movieList.getVisibility();
+    }
 }

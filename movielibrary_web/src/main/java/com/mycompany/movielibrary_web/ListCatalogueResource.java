@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -23,7 +24,7 @@ public class ListCatalogueResource {
     @EJB
     IListCatalogue listCatalogue;
     
-    
+    //Finds all the public lists
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll(@PathParam("id") Long id) {
@@ -33,12 +34,14 @@ public class ListCatalogueResource {
             for (MovieList m : lists) {
                 listWrapper.add(new ListCatalogueWrapper(m));
             }
-            return Response.ok(listWrapper).build();
+            GenericEntity<List<ListCatalogueWrapper>> ge = new GenericEntity<List<ListCatalogueWrapper>>(listWrapper){};
+            return Response.ok(ge).build();
         } else {
             return Response.noContent().build();
         }
     }
     
+    //Find the list - if it's public, return it
     @GET
     @Path(value = "{id}")
     @Produces(value = {MediaType.APPLICATION_JSON})
