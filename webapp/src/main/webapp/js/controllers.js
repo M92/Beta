@@ -11,6 +11,21 @@ controllers.controller('NavigationCtrl', ['$scope',
     }
 ]);
 
+controllers.controller('AuthCtrl', ['$rootScope',
+    'AuthService',
+    function($rootScope, AuthService) {
+        AuthService.getSession().
+            success(function(data) {
+                $rootScope.currentUser = data.username;
+                $rootScope.isLoggedIn = true;
+            }).
+            error(function() {
+                $rootScope.currentUser = '';
+                $rootScope.isLoggedIn = false;
+            });
+    }
+]);
+
 controllers.controller('MovieSearchCtrl', ['$scope',
     '$routeParams', 'RottenTomatoesProxy',
     function($scope, $routeParams, RottenTomatoesProxy) {

@@ -24,7 +24,7 @@ import org.brickred.socialauth.util.SocialAuthUtil;
 public class CallbackServlet extends HttpServlet {
 
     @EJB
-    IUserRegistry userRegistry;
+    private IUserRegistry userRegistry;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

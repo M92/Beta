@@ -26,6 +26,7 @@ app.config(['$routeProvider', '$locationProvider',
             }).
             otherwise({
                 templateUrl: 'partials/home.html',
+                controller: 'AuthCtrl',
                 redirectTo: '/'
             });
         

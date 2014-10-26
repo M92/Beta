@@ -2,6 +2,18 @@
 
 var services = angular.module('appServices', []);
 
+var apiBase = 'http://localhost:8080/webapp/api';
+
+services.factory('AuthService', ['$http',
+    function($http) {
+        return {
+            getSession: function() {
+                return $http.get(apiBase + '/session');
+            }
+        };
+    }
+]);
+
 services.factory('RottenTomatoesProxy', ['$http',
     function($http) {
         var uriBase = 'http://api.rottentomatoes.com/api/public/v1.0';
