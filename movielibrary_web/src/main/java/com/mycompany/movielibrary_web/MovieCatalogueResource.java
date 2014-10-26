@@ -117,8 +117,8 @@ public class MovieCatalogueResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll() {
         List<MovieCatalogueWrapper> pwList = new ArrayList<>();
-        List<Movie> prodList = movieCatalogue.findAll();
-        for (Movie p : prodList) {
+        List<Movie> movieList = movieCatalogue.findAll();
+        for (Movie p : movieList) {
             pwList.add(new MovieCatalogueWrapper(p));
         }
         GenericEntity<List<MovieCatalogueWrapper>> ge = new GenericEntity<List<MovieCatalogueWrapper>>(pwList) {

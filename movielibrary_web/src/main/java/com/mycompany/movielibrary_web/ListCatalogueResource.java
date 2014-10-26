@@ -5,6 +5,8 @@ import dat076.group4.model.core.MovieList.Visibility;
 import dat076.group4.model.dao.IListCatalogue;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ws.rs.*;
 import javax.ws.rs.Path;
@@ -27,14 +29,18 @@ public class ListCatalogueResource {
     //Finds all the public lists
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findAll(@PathParam("id") Long id) {
+    public Response findAllPublic() {
         List<ListCatalogueWrapper> listWrapper = new ArrayList<>();
-        List<MovieList> lists = listCatalogue.getByVisibility(MovieList.Visibility.PUBLIC);
+        List<MovieList> lists = listCatalogue.getByVisibility(Visibility.PUBLIC);
+       Logger.getAnonymousLogger().log(Level.INFO, lists.toString());
         if (!lists.isEmpty()) {
             for (MovieList m : lists) {
                 listWrapper.add(new ListCatalogueWrapper(m));
+                Logger.getAnonymousLogger().log(Level.INFO, listWrapper.toString());
             }
+            Logger.getAnonymousLogger().log(Level.INFO, listWrapper.toString());
             GenericEntity<List<ListCatalogueWrapper>> ge = new GenericEntity<List<ListCatalogueWrapper>>(listWrapper){};
+            Logger.getAnonymousLogger().log(Level.INFO, ge.toString());
             return Response.ok(ge).build();
         } else {
             return Response.noContent().build();
@@ -45,7 +51,7 @@ public class ListCatalogueResource {
     @GET
     @Path(value = "{id}")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response find(@PathParam("id") Long id) {
+    public Response findPublic(@PathParam("id") Long id) {
         MovieList list = listCatalogue.find(id);
         if (list.getVisibility() == Visibility.PUBLIC) {
             ListCatalogueWrapper lcw = new ListCatalogueWrapper(list);

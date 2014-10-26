@@ -48,6 +48,11 @@ public class UserRegistryWrapper {
 //    }
     
     @XmlElement
+     public MovieList getList(Long id){
+        return user.getList(id);
+    }
+    
+    @XmlElement
     public String getNickname() {
         return user.getNickname();
     }

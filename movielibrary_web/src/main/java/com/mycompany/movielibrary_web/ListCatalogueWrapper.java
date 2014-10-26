@@ -36,12 +36,12 @@ public class ListCatalogueWrapper {
         this.movieList = movieList; 
     }
     
-    @XmlElement
-    public User getUser() {
-        return movieList.getUser();
-    }
+//    @XmlElement
+//    public User getUser() {
+//        return movieList.getUser();
+//    }
 
-    @XmlElement //If serving XML we should use @XmlAttribute 
+    @XmlAttribute //If serving XML we should use @XmlAttribute 
     public Long getId() {
         return movieList.getId();
     }
@@ -50,7 +50,7 @@ public class ListCatalogueWrapper {
     public List<Movie> getMovies() {
         return movieList.getMovies();
     }
-    
+  
     @XmlElement
     public Date getCreationDate() {
         return movieList.getCreationDate();

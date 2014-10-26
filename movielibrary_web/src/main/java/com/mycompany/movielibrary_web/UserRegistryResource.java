@@ -77,12 +77,12 @@ public class UserRegistryResource {
     @Path(value = "{nickname}/lists")
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAll(@PathParam(value = "nickname") String nickname) {
-        List<UserRegistryWrapper> pwList = new ArrayList<>();
+        List<UserRegistryWrapper> urw = new ArrayList<>();
         List<User> userList = userRegistry.findAll();
         for (User u : userList) {
-            pwList.add(new UserRegistryWrapper(u));
+            urw.add(new UserRegistryWrapper(u));
         }
-        GenericEntity<List<UserRegistryWrapper>> ge = new GenericEntity<List<UserRegistryWrapper>>(pwList) {
+        GenericEntity<List<UserRegistryWrapper>> ge = new GenericEntity<List<UserRegistryWrapper>>(urw) {
         };
         return Response.ok(ge).build();
     }
