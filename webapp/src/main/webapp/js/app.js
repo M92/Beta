@@ -24,6 +24,12 @@ app.config(['$routeProvider', '$locationProvider',
             when('/test-page', {
                 templateUrl: 'partials/test-page.html'
             }).
+            when('/lists', {
+                templateUrl: 'partials/public-lists.html'
+            }).
+            when('/:user/lists', {
+                templateUrl: 'partials/my-lists.html'
+            }).
             otherwise({
                 templateUrl: 'partials/home.html',
                 redirectTo: '/'

@@ -2,5 +2,8 @@
     <h1>Happiness is list-shaped</h1>
     <p>Good movies deserves good lists.</p>
     <p>Start listing movies with <b>movielister</b> today.</p>
-    <p><a class="btn btn-lg btn-primary" href="#" role="button">What's in your list? »</a></p>
+    <p ng-switch on="isLoggedIn">
+        <a class="btn btn-lg btn-primary" role="button" ng-switch-when="true" href="{{currentUser}}/lists">What's in your list? »</a>
+        <a class="btn btn-lg btn-primary" role="button" ng-switch-default href="login" target="_self">What's in your list? »</a>
+    </p>
 </div>

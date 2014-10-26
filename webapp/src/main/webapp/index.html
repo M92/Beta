@@ -32,10 +32,10 @@
                     <div class="collapse navbar-collapse" id="main-navbar-collapse">
                         <ul class="nav navbar-nav">
                             <li ng-switch on="isLoggedIn">
-                                <a ng-switch-when="true" href="{{currentUser}}/lists" target="_self">My Lists</a>
+                                <a ng-switch-when="true" href="{{currentUser}}/lists">My Lists</a>
                                 <a ng-switch-default href="login" target="_self">My Lists</a>
                             </li>
-                            <li><a href="test-page">Public Lists</a></li>
+                            <li><a href="lists">Public Lists</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li>
