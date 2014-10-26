@@ -21,9 +21,6 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'partials/movie-detail.html',
                 controller: 'MovieDetailCtrl'
             }).
-            when('/test-page', {
-                templateUrl: 'partials/test-page.html'
-            }).
             when('/lists', {
                 templateUrl: 'partials/public-lists.html'
             }).

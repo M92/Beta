@@ -46,13 +46,4 @@
         <to>/index.html</to>
     </rule>
 
-    <rule>
-        <from>/test-page</from>
-        <to>/index.html</to>
-    </rule>
-    <rule>
-        <from>/test-page/**</from>
-        <to>/index.html</to>
-    </rule>
-
 </urlrewrite>
