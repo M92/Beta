@@ -12,3 +12,20 @@ body {
 .table>tbody>tr>td {
     vertical-align: middle;
 }
+
+.movie-detail img {
+    float: left;
+    margin-bottom: 20px;
+    margin-right: 20px;
+
+
+}
+
+.movie-detail h1{
+    margin-bottom: 20px
+}
+
+.movie-detail .info{
+    float: left;
+}
+
