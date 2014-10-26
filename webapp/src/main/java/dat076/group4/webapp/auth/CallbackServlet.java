@@ -1,9 +1,11 @@
 package dat076.group4.webapp.auth;
 
+import dat076.group4.model.core.User;
+import dat076.group4.model.dao.IUserRegistry;
+
 import java.io.IOException;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,15 +23,13 @@ import org.brickred.socialauth.util.SocialAuthUtil;
 @WebServlet("/callback")
 public class CallbackServlet extends HttpServlet {
 
-    private static final Logger LOG = Logger.getLogger(CallbackServlet.class.getSimpleName());
+    @EJB
+    IUserRegistry userRegistry;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        LOG.log(Level.INFO, "*** CallbackServlet");
-
         HttpSession session = request.getSession(false);
-
         try {
             SocialAuthManager manager = (SocialAuthManager)session.getAttribute("authManager");
             Map<String, String> paramsMap = SocialAuthUtil.getRequestParametersMap(request);
@@ -39,17 +39,15 @@ public class CallbackServlet extends HttpServlet {
             Profile profile = provider.getUserProfile();
             Long providerID = Long.parseLong(profile.getValidatedId());
             String username = profile.getDisplayName().toLowerCase();
-/*
-            // Check if a user account exists, otherwise create it
+
             if (userRegistry.getByOAuth(providerID) == null) {
                 userRegistry.create(new User(providerID, username));
             }
-*/
             session.setAttribute("key", key);
             session.setAttribute("username", username);
 
         } catch (Exception e) {
-            response.sendRedirect("/errorcallback.html");
+            response.sendError(500);
         }
         response.sendRedirect("/webapp/");
     }
