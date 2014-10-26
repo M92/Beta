@@ -38,7 +38,7 @@ public class CallbackServlet extends HttpServlet {
 
             Profile profile = provider.getUserProfile();
             Long providerID = Long.parseLong(profile.getValidatedId());
-            String username = profile.getDisplayName();
+            String username = profile.getDisplayName().toLowerCase();
 /*
             // Check if a user account exists, otherwise create it
             if (userRegistry.getByOAuth(providerID) == null) {
