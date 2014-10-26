@@ -14,6 +14,17 @@ services.factory('AuthService', ['$http',
     }
 ]);
 
+services.factory('UserListsProxy', ['$http',
+    function($http) {
+        return {
+            addMovieList: function(user, name) {
+                var jsonObj = { 'listname': name };
+                return $http.post(apiBase + '/' + user + '/lists', jsonObj);
+            }
+        };
+    }
+]);
+
 services.factory('RottenTomatoesProxy', ['$http',
     function($http) {
         var uriBase = 'http://api.rottentomatoes.com/api/public/v1.0';

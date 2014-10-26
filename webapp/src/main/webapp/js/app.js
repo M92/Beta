@@ -25,7 +25,8 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'partials/public-lists.html'
             }).
             when('/:user/lists', {
-                templateUrl: 'partials/my-lists.html'
+                templateUrl: 'partials/my-lists.html',
+                controller: 'UserListsCtrl'
             }).
             otherwise({
                 templateUrl: 'partials/home.html',

@@ -26,6 +26,21 @@ controllers.controller('AuthCtrl', ['$rootScope',
     }
 ]);
 
+controllers.controller('UserListsCtrl', ['$scope',
+    '$location', '$routeParams', 'UserListsProxy',
+    function($scope, $location, $routeParams, UserListsProxy) {
+        $scope.addMovieList = function() {
+            UserListsProxy.addMovieList($routeParams.user, $scope.name).
+                success(function(data) {
+                    $location.path($routeParams.user + '/lists/' + data.id);
+                }).
+                error(function(data, status) {
+                    alert('Error ' + status);
+                });
+        };
+    }
+]);
+
 controllers.controller('MovieSearchCtrl', ['$scope',
     '$routeParams', 'RottenTomatoesProxy',
     function($scope, $routeParams, RottenTomatoesProxy) {

@@ -1,12 +1,16 @@
-<script>
-    var lists = [
-{ "title":"Coola" , "creation":"93" }, 
-{ "title":"Bäst" , "creation":"05" }, 
-{ "title":"Sci-fi" , "creation": "14-10-08" }
-];
-</script>
-
 <h3>My Lists</h3>
+
+<form>
+    <div class="form-group">
+       <input type="text" class="form-control" placeholder="New movie list title..." ng-model="name">
+           <div>
+               <button class="btn btn-primary" type="submit" 
+                       ng-click="addMovieList()">
+                   Add
+               </button>
+           </div>
+    </div>
+</form>
 
 <table class="table table-striped">
     <thead>
