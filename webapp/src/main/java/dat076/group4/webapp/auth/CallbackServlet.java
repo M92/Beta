@@ -46,10 +46,11 @@ public class CallbackServlet extends HttpServlet {
             session.setAttribute("key", key);
             session.setAttribute("username", username);
 
+            response.sendRedirect("/webapp/" + username + "/lists");
+
         } catch (Exception e) {
             response.sendError(500);
         }
-        response.sendRedirect("/webapp/");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
