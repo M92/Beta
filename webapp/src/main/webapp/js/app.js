@@ -21,6 +21,10 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'partials/movie-detail.html',
                 controller: 'MovieDetailCtrl'
             }).
+            when('/movies', {
+                templateUrl: 'partials/home.html',
+                redirectTo: '/'
+            }).
             when('/lists', {
                 templateUrl: 'partials/public-lists.html',
                 controller: 'PublicListsCtrl'
