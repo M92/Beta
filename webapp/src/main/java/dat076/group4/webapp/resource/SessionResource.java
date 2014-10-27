@@ -33,7 +33,7 @@ public class SessionResource {
             username = (String)session.getAttribute("username");
             jsonObj = Json.createObjectBuilder().add("username", username).build();
         } catch (Exception e) {
-            return Response.status(Status.UNAUTHORIZED).build();
+            return Response.noContent().build();
         }
         return Response.ok(jsonObj).build();
     }

@@ -11,17 +11,18 @@ controllers.controller('NavigationCtrl', ['$scope',
     }
 ]);
 
-controllers.controller('AuthCtrl', ['$rootScope',
+controllers.controller('AuthCtrl', ['$scope',
     'AuthService',
-    function($rootScope, AuthService) {
+    function($scope, AuthService) {
         AuthService.getSession().
-            success(function(data) {
-                $rootScope.currentUser = data.username;
-                $rootScope.isLoggedIn = true;
-            }).
-            error(function() {
-                $rootScope.currentUser = '';
-                $rootScope.isLoggedIn = false;
+            success(function(data, status) {
+                if (status === 200) {
+                    $scope.currentUser = data.username;
+                    $scope.isLoggedIn = true;
+                } else {
+                    $scope.currentUser = '';
+                    $scope.isLoggedIn = false;
+                }
             });
     }
 ]);
