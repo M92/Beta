@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
@@ -33,7 +34,7 @@ public class UserRegistryResource {
     @UserFilterBinding
     @Path(value = "{nickname}/lists")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findAllLists(@PathParam(value = "nickname") String nickname) {
+    public Response findAllLists(@PathParam("nickname") String nickname) {
 
         User user = userRegistry.getByNickname(nickname);
         if (user == null) {
@@ -54,7 +55,7 @@ public class UserRegistryResource {
     @UserFilterBinding
     @Path(value = "{nickname}/lists/{id}")
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response findList(@PathParam(value = "nickname") String nickname,
+    public Response findList(@PathParam("nickname") String nickname,
                              @PathParam("id") long id) {
 
         User user = userRegistry.getByNickname(nickname);
@@ -71,10 +72,10 @@ public class UserRegistryResource {
         return Response.status(Response.Status.NOT_FOUND).build();
     }
 
-    @POST 
+    @POST
+    @UserFilterBinding
     @Path(value = "{nickname}/lists")
     @Consumes(value = MediaType.APPLICATION_JSON)
-    @Produces(value = {MediaType.APPLICATION_JSON})
     public Response createNewList(@PathParam("nickname") String nickname, JsonObject json) {
 
         User user = userRegistry.getByNickname(nickname);
@@ -90,5 +91,20 @@ public class UserRegistryResource {
         } catch (Exception e) {
             return Response.status(Status.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @DELETE
+    @UserFilterBinding
+    @Path(value = "{nickname}/lists/{id}")
+    public Response deleteList(@PathParam("nickname") String nickname,
+                               @PathParam("id") Long id) {
+
+        User user = userRegistry.getByNickname(nickname);
+        if (user == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        user.deleteList(id);
+        userRegistry.update(user);
+        return Response.ok().build();
     }
 }
