@@ -66,7 +66,8 @@ public class InitDataResource {
             userRegistry.create(f);
             userRegistry.create(g);
             
-            a.newList("hejhejhej");
+            MovieList mlist = a.newList("hejhejhej");
+            mlist.setVisibility(MovieList.Visibility.PUBLIC);
             userRegistry.update(a);
             
 
