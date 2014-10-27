@@ -112,3 +112,16 @@ controllers.controller('MovieListCtrl', ['$scope',
             });
     }
 ]);
+
+controllers.controller('UserMovieListCtrl', ['$scope',
+    '$routeParams', 'UserRegistryProxy',
+    function($scope, $routeParams, UserRegistryProxy) {
+        UserRegistryProxy.findUserList($routeParams.user, $routeParams.id).
+            success(function(data) {
+                $scope.list = data;
+            }).
+            error(function(data, status) {
+                alert('Error ' + status);
+            });
+    }
+]);

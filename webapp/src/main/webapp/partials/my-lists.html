@@ -4,7 +4,7 @@
         <div class="input-group">
             <input type="text" class="form-control" ng-model="listname"
                    ng-class="{ 'has-error' : input.listname.$invalid && !input.listname.$pristine }" 
-                   placeholder="Add new movie list..."  required>
+                   placeholder="Add title for new list..."  required>
             <p ng-show="input.listname.$invalid && !input.listname.$pristine" class="help-block">Title is required.</p>
             <div class="input-group-btn">
                 <button class="btn btn-default" type="submit" ng-disabled="input.$invalid">
@@ -24,12 +24,12 @@
     </thead>
     <tbody>
         <tr ng-repeat="list in lists">
-            <td><a href="lists/{{list.id}}">{{list.name}}</a></td>
+            <td><a href="{{currentUser}}/lists/{{list.id}}">{{list.name}}</a></td>
             <td>{{list.creationDate.split("T")[0]}}</td>
             <td>
-                <form>
-                    <input type="checkbox" name="visible">
-                </form>
+                <button class="btn btn-default">
+                    Edit
+                </button>
             </td>
         </tr>
     </tbody>

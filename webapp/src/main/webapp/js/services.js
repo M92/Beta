@@ -23,6 +23,9 @@ services.factory('UserRegistryProxy', ['$http',
             },
             findAllUserLists: function(user){
                 return $http.get(apiBase + '/users/' + user + '/lists');
+            },
+            findUserList: function(user, id){
+                return $http.get(apiBase + '/users/' + user + '/lists/' + id);
             }
         };
     }

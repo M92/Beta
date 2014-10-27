@@ -37,6 +37,10 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'partials/my-lists.html',
                 controller: 'UserListsCtrl'
             }).
+            when('/:user/lists/:id', {
+                templateUrl: 'partials/movie-list.html',
+                controller: 'UserMovieListCtrl'
+            }).
             otherwise({
                 templateUrl: 'partials/home.html',
                 redirectTo: '/'
