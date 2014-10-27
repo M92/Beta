@@ -1,6 +1,5 @@
-<h3>My Lists</h3>
-<div>
-    <form name="input" class="navbar-form navbar-left" role="form" ng-submit="addMovieList(input.$valid)" novalidate>
+<h1 style="display:inline">My Lists</h1>
+    <form name="input" class="navbar-form navbar-left pull-right" role="form" ng-submit="addMovieList(input.$valid)" novalidate>
         <div class="input-group">
             <input type="text" class="form-control" ng-model="listname"
                    ng-class="{ 'has-error' : input.listname.$invalid && !input.listname.$pristine }" 
@@ -13,24 +12,17 @@
             </div>
         </div>
     </form>
-</div>
 <table class="table table-striped">
     <thead>
         <tr>
             <th>List Title</th>
             <th>Creation Date</th>
-            <th>Publicly Available</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="list in lists">
             <td><a href="{{currentUser}}/lists/{{list.id}}">{{list.name}}</a></td>
             <td>{{list.creationDate.split("T")[0]}}</td>
-            <td>
-                <button class="btn btn-default">
-                    Edit
-                </button>
-            </td>
         </tr>
     </tbody>
 </table>

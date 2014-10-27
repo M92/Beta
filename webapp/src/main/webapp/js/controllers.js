@@ -113,7 +113,7 @@ controllers.controller('MovieListCtrl', ['$scope',
     }
 ]);
 
-controllers.controller('UserMovieListCtrl', ['$scope',
+controllers.controller('UserListDetailCtrl', ['$scope',
     '$routeParams', 'UserRegistryProxy',
     function($scope, $routeParams, UserRegistryProxy) {
         UserRegistryProxy.findUserList($routeParams.user, $routeParams.id).
@@ -123,5 +123,15 @@ controllers.controller('UserMovieListCtrl', ['$scope',
             error(function(data, status) {
                 alert('Error ' + status);
             });
+        $scope.renameList = function(isValid) {
+            if(isValid){
+                UserRegistryProxy.renameList($routeParams.user, $scope.input).
+                    success(function() {
+                    }).
+                    error(function(data, status) {
+                        alert('Error ' + status);
+                    });
+                }
+        };
     }
 ]);

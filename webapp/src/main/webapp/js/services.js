@@ -26,6 +26,10 @@ services.factory('UserRegistryProxy', ['$http',
             },
             findUserList: function(user, id){
                 return $http.get(apiBase + '/users/' + user + '/lists/' + id);
+            },
+            renameList: function(user, input) {
+                var jsonObj = { 'listname': input };
+                return $http.put(apiBase + '/users/' + user + '/lists', jsonObj);
             }
         };
     }

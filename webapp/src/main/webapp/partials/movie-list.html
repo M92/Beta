@@ -1,15 +1,54 @@
-<h3>List details for {{list.name}}</h3>
+<h1 style="display:inline">{{list.name}}</h1>
+    <form name="input" class="navbar-form navbar-left span4 pull-right"
+          role="form" ng-submit="renameList(input.$valid)" novalidate>
+        <div class="input-group span4">
+            <input type="text" class="form-control" ng-model="listname"
+                   ng-class="{ 'has-error' : input.listname.$invalid && !input.listname.$pristine }" 
+                   placeholder="{{list.name}}"  required>
+            <p ng-show="input.listname.$invalid && !input.listname.$pristine" class="help-block">Title is required.</p>
+            <div class="input-group-btn">
+                <button class="btn btn-default" type="submit" ng-disabled="input.$invalid">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+<button class="btn btn-default pull-right" style="margin-top: 8px">
+    Delete list
+    <i class="glyphicon glyphicon-remove"></i>
+</button>
+<!--<button class="btn btn-default pull-right"  ng-switch on="{{list.visibility}}"
+        style="margin-top: 8px">
+        <span ng-switch-when="PUBLIC" class="glyphicon glyphicon-eye-open">Public</span>
+        <span ng-switch-when="PRIVATE" class="glyphicon glyphicon-eye-close">Public</span>
+</button>-->
+
+<div ng-switch="{{list.visibility}}">
+    <div ng-switch-when="PUBLIC">PUBLIC</div>
+    <div ng-switch-when="PRIVATE">PRIVATE</div>
+    <div ng-switch-default>Secret is not visible for you!</div>
+</div>
 <table class="table table-striped">
     <thead>
         <tr>
             <th>Title</th>
             <th>Year</th>
+            <th>Runtime</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="movie in list.movies">
-            <td>{{movie.title}}</td>
+            <td><a href="movies/{{movie.id}}">{{movie.title}}</a></td>
             <td>{{movie.releaseYear}}</td>
+            <td>{{movie.runTime}}</td>
+            <td align="right">
+                <button class="btn btn-default">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </td>
         </tr>
     </tbody>
 </table>
+
+<i class="glyphicon glyphicon-eye-close"></i>

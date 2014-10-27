@@ -39,7 +39,7 @@ app.config(['$routeProvider', '$locationProvider',
             }).
             when('/:user/lists/:id', {
                 templateUrl: 'partials/movie-list.html',
-                controller: 'UserMovieListCtrl'
+                controller: 'UserListDetailCtrl'
             }).
             otherwise({
                 templateUrl: 'partials/home.html',
