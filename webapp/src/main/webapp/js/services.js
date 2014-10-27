@@ -19,7 +19,10 @@ services.factory('UserRegistryProxy', ['$http',
         return {
             addMovieList: function(user, name) {
                 var jsonObj = { 'listname': name };
-                return $http.post(apiBase + '/' + user + '/lists', jsonObj);
+                return $http.post(apiBase + '/users/' + user + '/lists', jsonObj);
+            },
+            findAllUserLists: function(user){
+                return $http.get(apiBase + '/users/' + user + '/lists');
             }
         };
     }

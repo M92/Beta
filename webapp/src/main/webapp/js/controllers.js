@@ -30,11 +30,23 @@ controllers.controller('AuthCtrl', ['$scope',
 controllers.controller('UserListsCtrl', ['$scope',
     '$location', '$routeParams', 'UserRegistryProxy',
     function($scope, $location, $routeParams, UserRegistryProxy) {
+        UserRegistryProxy.findAllUserLists($routeParams.user).
+                success(function(data, status) {
+                    if(status === 200){
+                        $scope.lists = data;
+                    }
+                    else if(status === 204){
+                        //inga listor finns
+                    }
+                }).
+                error(function(data, status) {
+                    alert('Error ' + status);
+                });
         $scope.addMovieList = function() {
             UserRegistryProxy.addMovieList($routeParams.user, $scope.name).
                 success(function(data) {
                     $location.path($routeParams.user + '/lists/' + data.id);
-                    $scope.lists = data
+                    $scope.lists = data;
                 }).
                 error(function(data, status) {
                     alert('Error ' + status);
