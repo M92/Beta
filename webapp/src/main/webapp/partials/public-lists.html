@@ -13,7 +13,7 @@
             <td><a href="lists/{{list.id}}">{{list.name}}</a></td>
             <td>{{list.movies}}</td>
             <td>{{list.owner}}</td>
-            <td>{{list.creationDate}}</td>
+            <td>{{list.creationDate.split("T")[0]}}</td>
         </tr>
     </tbody>
 </table>
