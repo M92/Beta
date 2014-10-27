@@ -41,6 +41,19 @@ controllers.controller('UserListsCtrl', ['$scope',
     }
 ]);
 
+controllers.controller('PublicListsCtrl', ['$scope',
+    'PublicListsProxy',
+    function($scope, PublicListsProxy) {
+        PublicListsProxy.findAll().
+            success(function(data) {
+                $scope.lists = data;
+            }).
+            error(function(data, status) {
+                alert('Error ' + status);
+            });
+    }
+]);
+
 controllers.controller('MovieSearchCtrl', ['$scope',
     '$routeParams', 'RottenTomatoesProxy',
     function($scope, $routeParams, RottenTomatoesProxy) {

@@ -22,7 +22,8 @@ app.config(['$routeProvider', '$locationProvider',
                 controller: 'MovieDetailCtrl'
             }).
             when('/lists', {
-                templateUrl: 'partials/public-lists.html'
+                templateUrl: 'partials/public-lists.html',
+                controller: 'PublicListsCtrl'
             }).
             when('/:user/lists', {
                 templateUrl: 'partials/my-lists.html',

@@ -25,6 +25,16 @@ services.factory('UserListsProxy', ['$http',
     }
 ]);
 
+services.factory('PublicListsProxy', ['$http',
+    function($http) {
+        return {
+            findAll: function() {
+                return $http.get(apiBase + '/lists');
+            }
+        };
+    }
+]);
+
 services.factory('RottenTomatoesProxy', ['$http',
     function($http) {
         var uriBase = 'http://api.rottentomatoes.com/api/public/v1.0';
