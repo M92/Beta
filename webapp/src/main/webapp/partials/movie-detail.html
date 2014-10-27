@@ -5,32 +5,33 @@
 
     <div class="info">
 
-        <b>Run Time</b>
-            <p>{{movie.runtime}} min</p>
-            
-        <b>Critics Score</b>
-            <p>{{movie.ratings.critics_score}}%</p>
-            
-        <b>Audience Score</b>
-            <p>{{movie.ratings.audience_score}}%</p>
-            
+        <b>Run time</b>
+        <p>{{movie.runtime}} min</p>
+
+        <b>Critics score</b>
+        <p>{{movie.ratings.critics_score}}%</p>
+
+        <b>Audience score</b>
+        <p>{{movie.ratings.audience_score}}%</p>
+
         <b>Genre</b>
         <ul class="list-inline">
             <li ng-repeat="genre in movie.genres">{{genre}}</li>
         </ul>
-        
-        <b>Synopsis</b>
-            <p>{{movie.synopsis}}</p>
 
-        <b>Director</b>
+        <b>Directors</b>
         <ul class="list-inline">
             <li ng-repeat="director in movie.abridged_directors">{{director.name}}</li>
         </ul>
-        
+
         <b>Stars</b>
         <ul class="list-inline">
             <li ng-repeat="stars in movie.abridged_cast">{{stars.name}}</li>
         </ul>
 
+        <div ng-show="movie.synopsis">
+            <b>Synopsis</b>
+            <p>{{movie.synopsis}}</p>
+        </div>
     </div>
 </div>

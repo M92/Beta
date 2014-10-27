@@ -15,17 +15,14 @@ body {
 
 .movie-detail img {
     float: left;
-    margin-bottom: 20px;
-    margin-right: 20px;
-
-
+    margin-bottom: 30px;
+    margin-right: 40px;
 }
 
-.movie-detail h1{
-    margin-bottom: 20px
+.movie-detail h1 {
+    margin-bottom: 30px;
 }
 
 .movie-detail .info{
     float: left;
 }
-
