@@ -3,7 +3,6 @@ package dat076.group4.model.core;
 import dat076.group4.model.dao.IListCatalogue;
 import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
-
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -27,10 +26,15 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Testing the persistence layer.
+ * Testing the persistence layer
+ *
+ * NOTE NOTE NOTE: JavaDB (Derby) must be running (not using an embedded
+ * database) GlassFish not needed using embedded
+ *
+ * @author hajo
  */
 @RunWith(Arquillian.class)
-public class TestPersistence {
+public class TestMovieLibraryPersistence {
 
     
     @EJB
@@ -43,7 +47,7 @@ public class TestPersistence {
     @Resource
     UserTransaction utx;
     
-    @PersistenceContext(unitName = "model_pu")
+    @PersistenceContext(unitName = "movie_library_pu")
     @Produces
     @Default
     EntityManager em;
@@ -169,7 +173,7 @@ public class TestPersistence {
         userRegistry.create(user);
         
         items.add(m);
-        MovieList movieList = new MovieList(user, items);
+        MovieList movieList = new MovieList(user, "myList" ,items);
         // This should be persistent (cascade)
         listCatalogue.create(movieList);
 
@@ -193,7 +197,7 @@ public class TestPersistence {
         userRegistry.create(user);
         
         items.add(m);
-        MovieList movieList = new MovieList(user, items);
+        MovieList movieList = new MovieList(user, "randomNaming",items);
 
         listCatalogue.create(movieList);
         listCatalogue.delete(movieList.getId());
@@ -219,7 +223,7 @@ public class TestPersistence {
         userRegistry.create(user);
         
         items.add(m);
-        MovieList movieList = new MovieList(user, items);
+        MovieList movieList = new MovieList(user, "deleteUserListname",items);
         user.addList(movieList);
         
         listCatalogue.create(movieList);
@@ -240,7 +244,7 @@ public class TestPersistence {
     @Test
     public void testCascadeList() throws Exception{
         User user = new User(new Long(5),"eee");
-        user.addList(new MovieList(user, new ArrayList<Movie>()));
+        user.addList(new MovieList(user,"noNamingFantasy",new ArrayList<Movie>()));
         userRegistry.create(user);
         
         assertTrue(!listCatalogue.findAll().isEmpty());
@@ -251,7 +255,7 @@ public class TestPersistence {
     @Test
     public void testCreateNewListUser() throws Exception{
         User user = new User(new Long(6),"fff");
-        user.newList();
+        user.newList("Just create the list..");
         userRegistry.create(user);
         
         assertTrue(!listCatalogue.findAll().isEmpty());
@@ -291,7 +295,7 @@ public class TestPersistence {
                 .executeUpdate();
         
         User user = new User(new Long(1),"aaa");
-        MovieList list = new MovieList(user, listOfMovies);
+        MovieList list = new MovieList(user, "My Awesome List" ,listOfMovies);
         list.setVisibility(MovieList.Visibility.PUBLIC);
         user.addList(list);
         userRegistry.create(user);
