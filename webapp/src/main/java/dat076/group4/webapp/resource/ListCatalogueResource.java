@@ -14,9 +14,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 /**
- * REST resource for the ListCatalogue.
+ * REST resource for the (public) ListCatalogue.
  */
 @Path("lists")
 public class ListCatalogueResource {
@@ -29,11 +30,11 @@ public class ListCatalogueResource {
     public Response findAllPublic() {
         List<MovieList> lists = listCatalogue.getByVisibility(Visibility.PUBLIC);
         if (!lists.isEmpty()) {
-            List<MovieListWrapper> listWrapper = new ArrayList<>();
+            List<SimpleMovieListWrapper> listWrapper = new ArrayList<>();
             for (MovieList m : lists) {
-                listWrapper.add(new MovieListWrapper(m));
+                listWrapper.add(new SimpleMovieListWrapper(m));
             }
-            return Response.ok(new GenericEntity<List<MovieListWrapper>>(listWrapper){}).build();
+            return Response.ok(new GenericEntity<List<SimpleMovieListWrapper>>(listWrapper){}).build();
         } else {
             return Response.noContent().build();
         }
@@ -47,7 +48,7 @@ public class ListCatalogueResource {
         if (list != null && list.getVisibility() == Visibility.PUBLIC) {
             return Response.ok(new MovieListWrapper(list)).build();
         } else {
-            return Response.noContent().build();
+            return Response.status(Status.NOT_FOUND).build();
         }
     }
 }
