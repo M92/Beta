@@ -1,19 +1,20 @@
-
 <h3>Public Lists</h3>
-
 <table class="table table-striped">
     <thead>
         <tr>
-            <th></th>
             <th>List Title</th>
+            <th>Number of movies</th>
             <th>Owner</th>
-            <th>Creation Date</th>
+            <th>Creation Date</th> 
         </tr>
     </thead>
+        <tbody>
+        <tr ng-repeat="list in lists">
+            <td>{{list.id}}</td>
+            <td>{{list.movies}}</td>
+            <td>{{list.owner}}</td>
+            <td>{{list.creationDate}}</td>
+        </tr>
+    </tbody>
 </table>
-{{lists}}
-
-{{lists[0].creationDate}}
-
-{{lists[0].owner}}
 
