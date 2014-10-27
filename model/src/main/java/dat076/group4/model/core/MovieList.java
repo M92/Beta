@@ -28,7 +28,10 @@ public class MovieList extends AbstractEntity {
     public static enum Visibility {
         PRIVATE,
         PUBLIC,
-    }    
+    }  
+    
+    @Column(name = "LIST_NAME")
+    private String listName;
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -47,16 +50,17 @@ public class MovieList extends AbstractEntity {
 
     protected MovieList() {}
 
-    public MovieList(User user) {
-        this(user, new ArrayList<Movie>());
+    public MovieList(User user, String listName) {
+        this(user, listName, new ArrayList<Movie>());
     }
    
-    public MovieList(User user, List<Movie> movies) {
-        this(user, movies, Visibility.PRIVATE);
+    public MovieList(User user, String listName, List<Movie> movies) {
+        this(user, listName, movies, Visibility.PRIVATE);
     }
 
-    public MovieList(User user, List<Movie> movies, Visibility visibility) {
+    public MovieList(User user, String listName, List<Movie> movies, Visibility visibility) {
         this.user = user;
+        this.listName = listName;
         this.movies = movies;
         this.visibility = visibility;
     }
@@ -65,6 +69,14 @@ public class MovieList extends AbstractEntity {
         return user;
     }
 
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+    
     public List<Movie> getMovies() {
         return movies;
     }
