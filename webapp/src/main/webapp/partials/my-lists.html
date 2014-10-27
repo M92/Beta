@@ -1,11 +1,13 @@
 <h3>My Lists</h3>
 <div>
-    <form class="navbar-form navbar-left" role="form">
+    <form name="input" class="navbar-form navbar-left" role="form" ng-submit="addMovieList(input.$valid)" novalidate>
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Add new movie list..." ng-model="listname">
+            <input type="text" class="form-control" ng-model="listname"
+                   ng-class="{ 'has-error' : input.listname.$invalid && !input.listname.$pristine }" 
+                   placeholder="Add new movie list..."  required>
+            <p ng-show="input.listname.$invalid && !input.listname.$pristine" class="help-block">Title is required.</p>
             <div class="input-group-btn">
-                <button class="btn btn-default" type="submit"
-                        ng-click="addMovieList()">
+                <button class="btn btn-default" type="submit" ng-disabled="input.$invalid">
                     <i class="glyphicon glyphicon-plus"></i>
                 </button>
             </div>

@@ -40,14 +40,16 @@ controllers.controller('UserListsCtrl', ['$scope',
                 });
         };
         findAll();
-        $scope.addMovieList = function() {
-            UserRegistryProxy.addMovieList($routeParams.user, $scope.listname).
-                success(function() {
-                    findAll();
-                }).
-                error(function(data, status) {
-                    alert('Error ' + status);
-                });
+        $scope.addMovieList = function(isValid) {
+            if(isValid){
+                UserRegistryProxy.addMovieList($routeParams.user, $scope.listname).
+                    success(function() {
+                        findAll();
+                    }).
+                    error(function(data, status) {
+                        alert('Error ' + status);
+                    });
+                }
         };
     }
 ]);
