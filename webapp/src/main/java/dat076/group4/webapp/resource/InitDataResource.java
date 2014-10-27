@@ -5,9 +5,9 @@ import dat076.group4.model.core.MovieList;
 import dat076.group4.model.core.User;
 import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
+
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.ws.rs.Produces;
@@ -35,8 +35,6 @@ public class InitDataResource {
     public Response getJson() {
 
         try {
-            // init data
-    
             User a = new User(2845110303L , "adamlindberg076");
             User b = new User(2845389945L , "linuxuser5");
             User c = new User(2845633529L , "webapp3");
@@ -51,8 +49,8 @@ public class InitDataResource {
                 Movie m = new Movie(s, 2000);
                 listOfMovies.add(m);
                 movieCatalogue.create(m);
-        }
-            MovieList ml = new MovieList(a, listOfMovies);
+            }
+            MovieList ml = new MovieList(a, "c00l list", listOfMovies);
             a.addList(ml);
             
             LOG.log(Level.INFO, ml);
@@ -64,11 +62,7 @@ public class InitDataResource {
             userRegistry.create(e);
             userRegistry.create(f);
             userRegistry.create(g);
-            
-            
-            
-            
-            
+
         } catch (Exception e) {
             return Response.ok(Json.createObjectBuilder().add("init", "Exception").build()).build();
         }

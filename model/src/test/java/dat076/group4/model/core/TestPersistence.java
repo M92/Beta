@@ -3,6 +3,7 @@ package dat076.group4.model.core;
 import dat076.group4.model.dao.IListCatalogue;
 import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
+
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Resource;
@@ -26,17 +27,11 @@ import org.junit.runner.RunWith;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Testing the persistence layer
- *
- * NOTE NOTE NOTE: JavaDB (Derby) must be running (not using an embedded
- * database) GlassFish not needed using embedded
- *
- * @author hajo
+ * Testing the persistence layer.
  */
 @RunWith(Arquillian.class)
-public class TestMovieLibraryPersistence {
+public class TestPersistence {
 
-    
     @EJB
     IMovieCatalogue movieCatalogue;
     @EJB
@@ -46,8 +41,8 @@ public class TestMovieLibraryPersistence {
 
     @Resource
     UserTransaction utx;
-    
-    @PersistenceContext(unitName = "movie_library_pu")
+
+    @PersistenceContext(unitName = "model_pu")
     @Produces
     @Default
     EntityManager em;
@@ -62,7 +57,6 @@ public class TestMovieLibraryPersistence {
             .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
             // Must have for CDI to work
             .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
-
     }
 
     @Before  // Run before each test
@@ -160,8 +154,6 @@ public class TestMovieLibraryPersistence {
         }
         assertTrue(count == movieCatalogue.count());
     }
-    
-   
 
     @Test
     public void testPersistCreateListCatalogue() throws Exception{
@@ -185,17 +177,17 @@ public class TestMovieLibraryPersistence {
         assertEquals(users.get(0).getId(), user.getId() );
         assertEquals(movies.get(0).getId(), m.getId() );
     }
-    
+
     @Test
     public void testPersistenceDeleteMovieList() throws Exception{
-       List<Movie> items = new ArrayList<>();
-         //Movie p, User c, Movie item must be cascaded (Must be persistent)
+        List<Movie> items = new ArrayList<>();
+        //Movie p, User c, Movie item must be cascaded (Must be persistent)
         //Ex in ProductCatalogue @ManyToOne(cascade = CascadeType.PERSIST)
         Movie m = new Movie("eee", 555);
         User user = new User(new Long(3),"ccc");
         movieCatalogue.create(m);
         userRegistry.create(user);
-        
+
         items.add(m);
         MovieList movieList = new MovieList(user, "randomNaming",items);
 
@@ -211,21 +203,21 @@ public class TestMovieLibraryPersistence {
         assertEquals(1, users.size());
         assertEquals(1, movies.size());
     }
-    
-     @Test
+
+    @Test
     public void testPersistenceDeleteUser() throws Exception{
-       List<Movie> items = new ArrayList<>();
-         //Movie p, User c, Movie item must be cascaded (Must be persistent)
+        List<Movie> items = new ArrayList<>();
+        //Movie p, User c, Movie item must be cascaded (Must be persistent)
         //Ex in ProductCatalogue @ManyToOne(cascade = CascadeType.PERSIST)
         Movie m = new Movie("eee", 555);
         User user = new User(new Long(4),"ddd");
         movieCatalogue.create(m);
         userRegistry.create(user);
-        
+
         items.add(m);
         MovieList movieList = new MovieList(user, "deleteUserListname",items);
         user.addList(movieList);
-        
+
         listCatalogue.create(movieList);
         userRegistry.update(user);             //Updates the movieList
         userRegistry.delete(user.getId());
@@ -239,8 +231,7 @@ public class TestMovieLibraryPersistence {
         assertEquals(1, movies.size());
         assertEquals(0, movieLists.size());
     }
-    
-    
+
     @Test
     public void testCascadeList() throws Exception{
         User user = new User(new Long(5),"eee");
@@ -251,7 +242,7 @@ public class TestMovieLibraryPersistence {
         userRegistry.delete(user.getId());
         assertTrue(listCatalogue.findAll().isEmpty());        
     }
-    
+
     @Test
     public void testCreateNewListUser() throws Exception{
         User user = new User(new Long(6),"fff");
@@ -270,8 +261,7 @@ public class TestMovieLibraryPersistence {
         userRegistry.create(user);
         assertTrue(userRegistry.findAll().size() > 0);
     }
-    
-    
+
     @Test
     @InSequence(16)
     public void testMovieBulkUpdate() throws Exception {
@@ -295,7 +285,7 @@ public class TestMovieLibraryPersistence {
                 .executeUpdate();
         
         User user = new User(new Long(1),"aaa");
-        MovieList list = new MovieList(user, "My Awesome List" ,listOfMovies);
+        MovieList list = new MovieList(user, "My Awesome List", listOfMovies);
         list.setVisibility(MovieList.Visibility.PUBLIC);
         user.addList(list);
         userRegistry.create(user);
@@ -311,5 +301,4 @@ public class TestMovieLibraryPersistence {
         em.createQuery("DELETE FROM Movie").executeUpdate();
         utx.commit();
     }
-
 }
