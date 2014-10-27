@@ -29,14 +29,14 @@ public class ListCatalogueResource {
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllPublic() {
         List<MovieList> lists = listCatalogue.getByVisibility(Visibility.PUBLIC);
-        if (!lists.isEmpty()) {
+        if (lists.isEmpty()) {
+            return Response.noContent().build();
+        } else {
             List<SimpleMovieListWrapper> listWrapper = new ArrayList<>();
             for (MovieList m : lists) {
                 listWrapper.add(new SimpleMovieListWrapper(m));
             }
             return Response.ok(new GenericEntity<List<SimpleMovieListWrapper>>(listWrapper){}).build();
-        } else {
-            return Response.noContent().build();
         }
     }
 

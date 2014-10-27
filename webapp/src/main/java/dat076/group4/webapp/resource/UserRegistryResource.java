@@ -45,4 +45,25 @@ public class UserRegistryResource {
         }
         return Response.ok(new GenericEntity<List<SimpleMovieListWrapper>>(wLists){}).build();
     }
+
+    @GET
+    @UserFilterBinding
+    @Path(value = "{nickname}/lists/{id}")
+    @Produces(value = {MediaType.APPLICATION_JSON})
+    public Response findList(@PathParam(value = "nickname") String nickname,
+                             @PathParam("id") long id) {
+
+        User user = userRegistry.getByNickname(nickname);
+        if (user == null) {
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+        List<MovieList> lists = user.getLists();
+        for (MovieList list : lists) {
+            if (list.getId() == id) {
+                return Response.ok(new GenericEntity<MovieListWrapper>(
+                                   new MovieListWrapper(list)){}).build();
+            }
+        }
+        return Response.status(Response.Status.NOT_FOUND).build();
+    }
 }
