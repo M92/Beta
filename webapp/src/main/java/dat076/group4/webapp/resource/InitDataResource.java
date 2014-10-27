@@ -33,8 +33,11 @@ public class InitDataResource {
     @GET
     @Produces("application/json")
     public Response getJson() {
-
+        
         try {
+            for (User u : userRegistry.findAll())
+                userRegistry.delete(u.getId());
+            
             User a = new User(2845110303L , "adamlindberg076");
             User b = new User(2845389945L , "linuxuser5");
             User c = new User(2845633529L , "webapp3");
@@ -53,15 +56,19 @@ public class InitDataResource {
             MovieList ml = new MovieList(a, "c00l list", listOfMovies);
             a.addList(ml);
             
-            LOG.log(Level.INFO, ml);
+            //LOG.log(Level.INFO, ml);
             userRegistry.create(a);
-            LOG.log(Level.INFO, a);
+            //LOG.log(Level.INFO, a);
             userRegistry.create(b);
             userRegistry.create(c);
             userRegistry.create(d);
             userRegistry.create(e);
             userRegistry.create(f);
             userRegistry.create(g);
+            
+            a.newList("hejhejhej");
+            userRegistry.update(a);
+            
 
         } catch (Exception e) {
             return Response.ok(Json.createObjectBuilder().add("init", "Exception").build()).build();
