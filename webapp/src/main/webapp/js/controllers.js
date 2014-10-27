@@ -34,6 +34,7 @@ controllers.controller('UserListsCtrl', ['$scope',
             UserRegistryProxy.addMovieList($routeParams.user, $scope.name).
                 success(function(data) {
                     $location.path($routeParams.user + '/lists/' + data.id);
+                    $scope.lists = data
                 }).
                 error(function(data, status) {
                     alert('Error ' + status);
@@ -96,7 +97,7 @@ controllers.controller('MovieListCtrl', ['$scope',
     function($scope, $routeParams, ListCatalogueProxy) {
         ListCatalogueProxy.findList($routeParams.id).
             success(function(data) {
-                $scope.movielist = data;
+                $scope.list = data;
             });
     }
 ]);

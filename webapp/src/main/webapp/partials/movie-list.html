@@ -1,12 +1,4 @@
-<script>
-    var movies = [
-        {"title": "LOL", "year": "1993"},
-        {"title": "Up", "year": "2005"},
-        {"title": "Guardians of the Galaxy", "year": "2014"}
-    ];
-</script>
-<h3>My Movie List</h3>
-
+<h3>List details for {{list.id}}</h3>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -15,7 +7,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="movie in movielist">
+        <tr ng-repeat="movie in list.movies">
             <td>{{movie.title}}</td>
             <td>{{movie.releaseYear}}</td>
         </tr>
