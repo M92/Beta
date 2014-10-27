@@ -4,12 +4,8 @@
 
 <urlrewrite default-match-type="wildcard">
 
-    <!-- Exclude API from rewrites -->
-    <rule>
-        <from>/api/**</from>
-    </rule>
-
     <!-- Rewrites for Angular -->
+
     <rule>
         <from>/movies</from>
         <to>/index.html</to>
