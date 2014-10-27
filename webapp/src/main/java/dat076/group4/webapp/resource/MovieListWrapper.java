@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "MovieList", propOrder = {
     "id",
     "owner",
+    "name",
     "movies",
     "creationDate",
     "visibility"
@@ -38,6 +39,11 @@ public class MovieListWrapper {
     @XmlElement
     public String getOwner() {
         return movieList.getUser().getNickname();
+    }
+
+    @XmlElement
+    public String getName() {
+        return movieList.getListName();
     }
 
     @XmlElement
