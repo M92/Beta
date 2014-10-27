@@ -68,6 +68,11 @@ public class InitDataResource {
             
             MovieList mlist = a.newList("hejhejhej");
             mlist.setVisibility(MovieList.Visibility.PUBLIC);
+            mlist.addMovie(movieCatalogue.find(1L));
+            mlist.addMovie(movieCatalogue.find(2L));
+            mlist.addMovie(movieCatalogue.find(3L));
+            mlist.addMovie(movieCatalogue.find(4L));
+            
             userRegistry.update(a);
             
 
