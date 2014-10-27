@@ -25,6 +25,10 @@ app.config(['$routeProvider', '$locationProvider',
                 templateUrl: 'partials/home.html',
                 redirectTo: '/'
             }).
+            when('/lists/:id', {
+                templateUrl: 'partials/movie-list.html',
+                controller: 'MovieListCtrl'
+            }).
             when('/lists', {
                 templateUrl: 'partials/public-lists.html',
                 controller: 'PublicListsCtrl'

@@ -28,10 +28,10 @@ controllers.controller('AuthCtrl', ['$scope',
 ]);
 
 controllers.controller('UserListsCtrl', ['$scope',
-    '$location', '$routeParams', 'UserListsProxy',
-    function($scope, $location, $routeParams, UserListsProxy) {
+    '$location', '$routeParams', 'UserRegistryProxy',
+    function($scope, $location, $routeParams, UserRegistryProxy) {
         $scope.addMovieList = function() {
-            UserListsProxy.addMovieList($routeParams.user, $scope.name).
+            UserRegistryProxy.addMovieList($routeParams.user, $scope.name).
                 success(function(data) {
                     $location.path($routeParams.user + '/lists/' + data.id);
                 }).
@@ -43,9 +43,9 @@ controllers.controller('UserListsCtrl', ['$scope',
 ]);
 
 controllers.controller('PublicListsCtrl', ['$scope',
-    'PublicListsProxy',
-    function($scope, PublicListsProxy) {
-        PublicListsProxy.findAll().
+    'ListCatalogueProxy',
+    function($scope, ListCatalogueProxy) {
+        ListCatalogueProxy.findAll().
             success(function(data) {
                 $scope.lists = data;
             }).
@@ -87,6 +87,16 @@ controllers.controller('MovieDetailCtrl', ['$scope',
         RottenTomatoesProxy.movieDetail($routeParams.id).
             success(function(data) {
                 $scope.movie = data;
+            });
+    }
+]);
+
+controllers.controller('MovieListCtrl', ['$scope',
+    '$routeParams', 'ListCatalogueProxy',
+    function($scope, $routeParams, ListCatalogueProxy) {
+        ListCatalogueProxy.findList($routeParams.id).
+            success(function(data) {
+                $scope.movielist = data;
             });
     }
 ]);

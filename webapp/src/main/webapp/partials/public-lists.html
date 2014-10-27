@@ -10,7 +10,7 @@
     </thead>
         <tbody>
         <tr ng-repeat="list in lists">
-            <td>{{list.id}}</td>
+            <td><a href="lists/{{list.id}}">{{list.id}}</a></td>
             <td>{{list.movies}}</td>
             <td>{{list.owner}}</td>
             <td>{{list.creationDate}}</td>

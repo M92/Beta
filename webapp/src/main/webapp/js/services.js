@@ -14,7 +14,7 @@ services.factory('AuthService', ['$http',
     }
 ]);
 
-services.factory('UserListsProxy', ['$http',
+services.factory('UserRegistryProxy', ['$http',
     function($http) {
         return {
             addMovieList: function(user, name) {
@@ -25,11 +25,14 @@ services.factory('UserListsProxy', ['$http',
     }
 ]);
 
-services.factory('PublicListsProxy', ['$http',
+services.factory('ListCatalogueProxy', ['$http',
     function($http) {
         return {
             findAll: function() {
                 return $http.get(apiBase + '/lists');
+            },
+            findList: function(id){
+                return $http.get(apiBase + '/lists/' + id);
             }
         };
     }
