@@ -26,7 +26,7 @@ public class ListCatalogueResource {
     @EJB
     IListCatalogue listCatalogue;
     
-    //Finds all the public lists
+    //Finds all the public lists - ok men visar lite för mkt information
     @GET
     @Produces(value = {MediaType.APPLICATION_JSON})
     public Response findAllPublic() {

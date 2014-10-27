@@ -173,7 +173,7 @@ public class TestMovieLibraryPersistence {
         userRegistry.create(user);
         
         items.add(m);
-        MovieList movieList = new MovieList(user, items);
+        MovieList movieList = new MovieList(user, "myList" ,items);
         // This should be persistent (cascade)
         listCatalogue.create(movieList);
 
@@ -197,7 +197,7 @@ public class TestMovieLibraryPersistence {
         userRegistry.create(user);
         
         items.add(m);
-        MovieList movieList = new MovieList(user, items);
+        MovieList movieList = new MovieList(user, "randomNaming",items);
 
         listCatalogue.create(movieList);
         listCatalogue.delete(movieList.getId());
@@ -223,7 +223,7 @@ public class TestMovieLibraryPersistence {
         userRegistry.create(user);
         
         items.add(m);
-        MovieList movieList = new MovieList(user, items);
+        MovieList movieList = new MovieList(user, "deleteUserListname",items);
         user.addList(movieList);
         
         listCatalogue.create(movieList);
@@ -244,7 +244,7 @@ public class TestMovieLibraryPersistence {
     @Test
     public void testCascadeList() throws Exception{
         User user = new User(new Long(5),"eee");
-        user.addList(new MovieList(user, new ArrayList<Movie>()));
+        user.addList(new MovieList(user,"noNamingFantasy",new ArrayList<Movie>()));
         userRegistry.create(user);
         
         assertTrue(!listCatalogue.findAll().isEmpty());
@@ -255,7 +255,7 @@ public class TestMovieLibraryPersistence {
     @Test
     public void testCreateNewListUser() throws Exception{
         User user = new User(new Long(6),"fff");
-        user.newList();
+        user.newList("Just create the list..");
         userRegistry.create(user);
         
         assertTrue(!listCatalogue.findAll().isEmpty());
@@ -295,7 +295,7 @@ public class TestMovieLibraryPersistence {
                 .executeUpdate();
         
         User user = new User(new Long(1),"aaa");
-        MovieList list = new MovieList(user, listOfMovies);
+        MovieList list = new MovieList(user, "My Awesome List" ,listOfMovies);
         list.setVisibility(MovieList.Visibility.PUBLIC);
         user.addList(list);
         userRegistry.create(user);

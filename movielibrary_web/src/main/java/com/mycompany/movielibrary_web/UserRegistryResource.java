@@ -7,6 +7,7 @@ import dat076.group4.model.dao.IUserRegistry;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.json.JsonObject;
 import javax.ws.rs.*;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
@@ -29,7 +30,7 @@ public class UserRegistryResource {
     @EJB
     IUserRegistry userRegistry;
 
-    //Ta bort usern - testad ok ! Listorna tas även bort
+    //Ta bort usern - ok, listorna som användaren har tas även bort
     @DELETE 
     @Path(value = "{nickname}")
     public Response deleteUser(@PathParam("nickname") String nickname) {
@@ -42,14 +43,16 @@ public class UserRegistryResource {
         }
     }
 
-    // Skapa en ny lista - testad ok! 
+    // Skapa en ny lista i listkatalogen - Fungerar så länge namnet listName tilldelas
     @POST 
     @Path(value = "{nickname}/lists")
+    @Consumes(value = MediaType.APPLICATION_JSON)
+    //@Consumes(value = MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(value = {MediaType.APPLICATION_JSON})
-    public Response createNewList(@PathParam("nickname") String nickname) {
+    public Response createNewList(@PathParam("nickname") String nickname, JsonObject json) {
         User u = userRegistry.getByNickname(nickname);
         try {
-            u.newList();
+            u.newList(json.getString("listName"));
             userRegistry.update(u);
             UserRegistryWrapper uw = new UserRegistryWrapper(u);
             return Response.ok(uw).build();
@@ -58,7 +61,7 @@ public class UserRegistryResource {
         }
     }
 
-    //DEL - Ta bort den specifika listan - testad ok !
+    //DEL - Ta bort den specifika listan i listkatalogen - ok men tar inte bort filmer i movies-tabellen (behövs den ens?)
     @DELETE
     @Path(value = "{nickname}/lists/{listId}")
     public Response deleteList(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long id) {
@@ -87,20 +90,20 @@ public class UserRegistryResource {
         return Response.ok(ge).build();
     }
 
-    //Lägg till en ny lista i listan - testad ok
+    //Lägg till en ny film i listan - Fungerar men visar andra listor usern har
     @PUT 
     @Path(value = "{nickname}/lists/{listId}")
-//   @Consumes(value = MediaType.APPLICATION_JSON)
+    @Consumes(value = MediaType.APPLICATION_JSON)
     @Produces(value = {MediaType.APPLICATION_JSON})
-    @Consumes(value = MediaType.APPLICATION_FORM_URLENCODED)
-    //public Response addMovie(@PathParam("nickname") String nickname, @PathParam("listId") Long id, JsonObject json) {
-    public Response addMovie(@PathParam("nickname") String nickname, @PathParam("listId") Long id, @FormParam("title") String title, @FormParam("releaseYear") int releaseYear) {
+    //@Consumes(value = MediaType.APPLICATION_FORM_URLENCODED)
+    public Response addMovie(@PathParam("nickname") String nickname, @PathParam("listId") Long id, JsonObject json) {
+    //public Response addMovie(@PathParam("nickname") String nickname, @PathParam("listId") Long id, @FormParam("title") String title, @FormParam("releaseYear") int releaseYear) {
         User u = userRegistry.getByNickname(nickname);
         try {
             MovieList movieList = u.getList(id);
-            //movieList.addMovie(new Movie(json.getString("title"), json.getInt("releaseYear")));
+            movieList.addMovie(new Movie(json.getString("title"), json.getInt("releaseYear")));
 
-            movieList.addMovie(new Movie(title, releaseYear));
+            //movieList.addMovie(new Movie(title, releaseYear));
             userRegistry.update(u);
             UserRegistryWrapper uw = new UserRegistryWrapper(u);
             return Response.ok(uw).build();
@@ -109,7 +112,7 @@ public class UserRegistryResource {
         }
     }
 
-    //DEL - Ta bort den specifika filmen i listan - testad ok
+    //DEL - Ta bort den specifika filmen i listan - ok men tas inte bort i movies-tabellen
     @DELETE
     @Path(value = "{nickname}/lists/{listId}/{movieId}")
     public Response deleteMovie(@PathParam(value = "nickname") String nickname, @PathParam(value = "listId") Long listId, @PathParam(value = "movieId") Long movieId) {
@@ -143,7 +146,7 @@ public class UserRegistryResource {
     }*/
     
     
-    //Hitta alla filmer i listan - testat ok
+    //Hitta alla filmer i listan - ok
     @GET
     @Path(value = "{nickname}/lists/{listId}")
     @Produces(value = {MediaType.APPLICATION_JSON})

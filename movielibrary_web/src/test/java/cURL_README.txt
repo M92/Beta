@@ -11,12 +11,13 @@ This runs on GlassFish 4.0
 ------------------------------------------------------------
 # *** GET *** (read) NOTE: 8080 is for GlassFish
 curl -v -H "Accept: application/json" http://localhost:8080/movielibrary_web/webresources/movies
+curl -v -H "Accept: application/json" http://localhost:8080/webapp/api/movies
 
 //Hämta alla listor i katalogen
 curl -v -H "Accept: application/json" http://localhost:8080/movielibrary_web/webresources/users/aaa/lists 
 
 //Visa alla publika listor
-curl -v -H "Accept: application/json" http://localhost:8080/movielibrary_web/webresources/lists
+curl -v -H "Accept: application/json" http://localhost:8080/movielibrary_web/webresources/lists    --not working????
 
 
 # Possible need another id last! 
@@ -52,6 +53,7 @@ curl -v -X PUT http://localhost:8080/movielibrary_web/webresources/movies/1787 -
 
 //Lägg till en film i listan
 curl -v -X PUT http://localhost:8080/movielibrary_web/webresources/users/aaa/lists/839 --data "title=***POST***&releaseYear=2111"
+curl -v -X PUT http://localhost:8080/webapp/api/users/aaa/lists/839 --data "title=***POST***&releaseYear=2111"
 
 curl -v -X PUT http://localhost:8080/movielibrary_web/webresources/movielists/1787 --data "title=***POST***&releaseYear=2111"
 

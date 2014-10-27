@@ -60,8 +60,8 @@ public class User extends AbstractEntity {
         return null;
     }
     
-    public MovieList newList() {
-        MovieList list = new MovieList(this);
+    public MovieList newList(String name) {
+        MovieList list = new MovieList(this, name);
         lists.add(list);
         return list;
     }
