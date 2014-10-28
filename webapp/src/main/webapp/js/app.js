@@ -26,19 +26,19 @@ app.config(['$routeProvider', '$locationProvider',
                 redirectTo: '/'
             }).
             when('/lists/:id', {
-                templateUrl: 'partials/movie-list.html',
-                controller: 'MovieListCtrl'
+                templateUrl: 'partials/public-list-detail.html',
+                controller: 'PublicListDetailCtrl'
             }).
             when('/lists', {
                 templateUrl: 'partials/public-lists.html',
                 controller: 'PublicListsCtrl'
             }).
             when('/:user/lists', {
-                templateUrl: 'partials/my-lists.html',
+                templateUrl: 'partials/user-lists.html',
                 controller: 'UserListsCtrl'
             }).
             when('/:user/lists/:id', {
-                templateUrl: 'partials/movie-list.html',
+                templateUrl: 'partials/user-list-detail.html',
                 controller: 'UserListDetailCtrl'
             }).
             otherwise({

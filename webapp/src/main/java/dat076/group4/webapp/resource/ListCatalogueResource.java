@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 /**
- * REST resource for the (public) ListCatalogue.
+ * REST resource for the ListCatalogue.
  */
 @Path("lists")
 public class ListCatalogueResource {

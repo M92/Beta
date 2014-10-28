@@ -1,4 +1,4 @@
-package dat076.group4.webapp;
+package dat076.group4.webapp.filter;
 
 import java.io.IOException;
 import javax.servlet.FilterChain;

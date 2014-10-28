@@ -3,7 +3,6 @@ package dat076.group4.webapp.resource;
 import dat076.group4.model.core.Movie;
 import dat076.group4.model.core.MovieList;
 import dat076.group4.model.core.User;
-import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
 
 import javax.ejb.EJB;
@@ -20,9 +19,7 @@ import javax.ws.rs.core.Response;
 public class InitDataResource {
 
     @EJB
-    IMovieCatalogue movieCatalogue;
-    @EJB
-    IUserRegistry userRegistry;
+    private IUserRegistry userRegistry;
 
     @GET
     @Produces("application/json")
@@ -56,6 +53,18 @@ public class InitDataResource {
             usr1List1.addMovie(movA2);
             usr1List1.addMovie(movA3);
             usr1List1.addMovie(movA4);
+            usr1List1.setVisibility(MovieList.Visibility.PUBLIC);
+            MovieList usr1List2 = usr1.newList("Love is in the air");
+            usr1List2.addMovie(movB1);
+            usr1List2.addMovie(movB2);
+            usr1List2.addMovie(movB3);
+            MovieList usr1List3 = usr1.newList("Top 5");
+            usr1List3.addMovie(movC1);
+            usr1List3.addMovie(movC2);
+            usr1List3.addMovie(movC3);
+            usr1List3.addMovie(movC4);
+            usr1List3.addMovie(movC5);
+            usr1List3.setVisibility(MovieList.Visibility.PUBLIC);
             userRegistry.update(usr1);
 
         } catch (Exception e) {

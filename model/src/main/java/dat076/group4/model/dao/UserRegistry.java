@@ -8,7 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * All users
+ * DAO for users.
  */
 @Stateless
 public class UserRegistry extends AbstractDAO<User, Long>

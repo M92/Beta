@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
-	 version="3.1">
+<web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <session-config>
         <session-timeout>240</session-timeout>
     </session-config>
@@ -21,7 +17,7 @@
     </error-page>
     <filter>
         <filter-name>RewriteFilter</filter-name>
-        <filter-class>dat076.group4.webapp.RewriteFilter</filter-class>
+        <filter-class>dat076.group4.webapp.filter.RewriteFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>RewriteFilter</filter-name>

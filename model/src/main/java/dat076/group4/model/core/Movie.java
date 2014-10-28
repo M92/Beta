@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * A movie
+ * Entity class for movies.
  */
 @Entity
 @Table(name = "MOVIES")

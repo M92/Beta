@@ -18,7 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * A movie list
+ * Entity class for movie lists.
  */
 @Entity
 @Table(name = "LISTS")

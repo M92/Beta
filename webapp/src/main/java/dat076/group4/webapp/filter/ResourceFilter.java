@@ -1,4 +1,4 @@
-package dat076.group4.webapp.auth;
+package dat076.group4.webapp.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,12 +12,12 @@ import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
 /**
- * Resources annotated with @UserFilterBinding
+ * Resources annotated with @ResourceFilterBinding 
  * will be protected by this filter.
  */
 @Provider
-@UserFilterBinding
-public class UserFilter implements ContainerRequestFilter {
+@ResourceFilterBinding
+public class ResourceFilter implements ContainerRequestFilter {
 
     @Context
     HttpServletRequest webRequest;

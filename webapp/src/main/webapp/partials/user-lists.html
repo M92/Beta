@@ -1,0 +1,45 @@
+<h1 style="display:inline">{{currentUser}}'s lists</h1>
+<form name="input" class="navbar-form navbar-left pull-right" role="form" ng-submit="addMovieList(input.$valid)" novalidate>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="listname"
+               ng-class="{ 'has-error' : input.listname.$invalid && !input.listname.$pristine }" 
+               placeholder="Name your new list..."  required>
+        <p ng-show="input.listname.$invalid && !input.listname.$pristine" class="help-block">Title is required.</p>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit" ng-disabled="input.$invalid">
+                <i class="glyphicon glyphicon-plus"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="clearfix"></div>
+<table class="table table-striped" style="margin-top:20px">
+    <thead>
+        <tr>
+            <th>List name</th>
+            <th>Movies</th>
+            <th>Visibility</th>
+            <th>Creation date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="list in lists">
+            <td><a href="{{currentUser}}/lists/{{list.id}}">{{list.name}}</a></td>
+            <td>
+                <i class="glyphicon glyphicon-film"></i>
+                &nbsp;{{list.movies}}
+            </td>
+            <td ng-switch on="list.visibility">
+                <span ng-switch-when="PUBLIC">
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                    &nbsp;Public
+                </span>
+                <span ng-switch-when="PRIVATE">
+                    <i class="glyphicon glyphicon-eye-close"></i>
+                    &nbsp;Private
+                </span>
+            </td>
+            <td>{{list.creationDate.split("T")[0]}}</td>
+        </tr>
+    </tbody>
+</table>

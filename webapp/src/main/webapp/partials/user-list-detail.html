@@ -1,0 +1,64 @@
+<h1 style="display:inline">{{list.name}}</h1>
+<p style="display:inline">&nbsp;&nbsp;by&nbsp;{{currentUser}}</p>
+<form name="input" class="navbar-form navbar-left pull-right"
+      role="form" ng-submit="renameList(input.$valid)" novalidate>
+    <div class="input-group">
+        <input type="text" class="form-control" ng-model="listname"
+               ng-class="{ 'has-error' : input.listname.$invalid && !input.listname.$pristine }" 
+               placeholder="Rename list..."  required>
+        <p ng-show="input.listname.$invalid && !input.listname.$pristine" class="help-block">Name is required.</p>
+        <div class="input-group-btn">
+            <button class="btn btn-default" type="submit" ng-disabled="input.$invalid">
+                <i class="glyphicon glyphicon-edit"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="btn-group pull-right" ng-switch on="list.visibility"
+     style="clear:right; margin-right:15px">
+    <div class="btn-group" ng-switch-when="PUBLIC">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-eye-open"></i>
+            &nbsp;Public&nbsp;<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a ng-click="changeVisibility('PRIVATE')">Private</a></li>
+        </ul>
+    </div>
+    <div class="btn-group" ng-switch-when="PRIVATE">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-eye-close"></i>
+            &nbsp;Private&nbsp;<span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a ng-click="changeVisibility('PUBLIC')" >Public</a></li>
+        </ul>
+    </div>
+    <button class="btn btn-default" ng-click="deleteList()">
+        Delete&nbsp;list&nbsp;
+        <i class="glyphicon glyphicon-remove"></i>
+    </button>
+</div>
+<div class="clearfix"></div>
+<table class="table table-striped" style="margin-top:30px">
+    <thead>
+        <tr>
+            <th>Movie title</th>
+            <th>Release date</th>
+            <th>Run time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="movie in list.movies">
+            <td><a href="movies/{{movie.foreignId}}">{{movie.title}}</a></td>
+            <td>{{movie.releaseYear}}</td>
+            <td>{{movie.runTime}} min</td>
+            <td align="right">
+                <button class="btn btn-default" ng-click="removeMovie(movie.foreignId)">
+                    <i class="glyphicon glyphicon-remove"></i>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>

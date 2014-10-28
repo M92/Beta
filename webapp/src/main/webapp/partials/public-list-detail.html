@@ -1,0 +1,44 @@
+<h1 style="display:inline">{{list.name}}</h1>
+<p style="display:inline">&nbsp;&nbsp;by&nbsp;{{list.owner}}</p>
+<div class="clearfix"></div>
+<table class="table table-striped" style="margin-top:30px">
+    <thead>
+        <tr>
+            <th>Movie title</th>
+            <th>Release date</th>
+            <th>Run time</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="movie in list.movies">
+            <td><a href="movies/{{movie.foreignId}}">{{movie.title}}</a></td>
+            <td>{{movie.releaseYear}}</td>
+            <td>{{movie.runTime}} min</td>
+            <td align="right">
+                <div class="dropdown" ng-switch on="isLoggedIn">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="add-to-list" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-star"></span>
+                        Add to list
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" ng-switch-when="true" role="menu" aria-labelledby="add-to-list">
+                        <li role="presentation" ng-repeat="list in lists">
+                            <a role="menuitem" tabindex="-1" ng-click="addToList(list.id, movie)">{{list.name}}</a>
+                        </li>
+                        <li role="presentation" ng-show="!lists.length" class="dropdown-header">You have no lists!</li>
+                        <li role="presentation" ng-show="!lists.length">
+                            <a role="menuitem" tabindex="-1" href="{{currentUser}}/lists">Create a list »</a>
+                        </li>
+                    </ul>
+                    <ul class="dropdown-menu" ng-switch-default role="menu" aria-labelledby="add-to-list">
+                        <li role="presentation" class="dropdown-header">You are not signed in!</li>
+                        <li role="presentation">
+                            <a role="menuitem" tabindex="-1" href="login" target="_self">Sign In »</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>

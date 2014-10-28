@@ -12,7 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * All movie lists
+ * DAO for movie lists.
  */
 @Stateless
 public class ListCatalogue extends AbstractDAO<MovieList, Long>

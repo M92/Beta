@@ -23,10 +23,6 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
-        resources.add(dat076.group4.webapp.auth.UserFilter.class);
-        resources.add(dat076.group4.webapp.resource.InitDataResource.class);
-        resources.add(dat076.group4.webapp.resource.ListCatalogueResource.class);
-        resources.add(dat076.group4.webapp.resource.SessionResource.class);
-        resources.add(dat076.group4.webapp.resource.UserRegistryResource.class);
+        resources.add(dat076.group4.webapp.filter.ResourceFilter.class);
     }
 }

@@ -14,27 +14,6 @@ services.factory('AuthService', ['$http',
     }
 ]);
 
-services.factory('UserRegistryProxy', ['$http',
-    function($http) {
-        return {
-            addMovieList: function(user, name) {
-                var jsonObj = { 'listname': name };
-                return $http.post(apiBase + '/users/' + user + '/lists', jsonObj);
-            },
-            findAllUserLists: function(user){
-                return $http.get(apiBase + '/users/' + user + '/lists');
-            },
-            findUserList: function(user, id){
-                return $http.get(apiBase + '/users/' + user + '/lists/' + id);
-            },
-            renameList: function(user, input) {
-                var jsonObj = { 'listname': input };
-                return $http.put(apiBase + '/users/' + user + '/lists', jsonObj);
-            }
-        };
-    }
-]);
-
 services.factory('ListCatalogueProxy', ['$http',
     function($http) {
         return {
@@ -43,6 +22,36 @@ services.factory('ListCatalogueProxy', ['$http',
             },
             findList: function(id){
                 return $http.get(apiBase + '/lists/' + id);
+            }
+        };
+    }
+]);
+
+services.factory('UserRegistryProxy', ['$http',
+    function($http) {
+        return {
+            findAllMovieLists: function(user) {
+                return $http.get(apiBase + '/users/' + user + '/lists');
+            },
+            findMovieList: function(user, id) {
+                return $http.get(apiBase + '/users/' + user + '/lists/' + id);
+            },
+            addMovieList: function(user, name) {
+                var jsonObj = { 'listname':name };
+                return $http.post(apiBase + '/users/' + user + '/lists', jsonObj);
+            },
+            deleteMovieList: function(user, id) {
+                return $http.delete(apiBase + '/users/' + user + '/lists/' + id);
+            },
+            editMovieList: function(user, id, name, visibility) {
+                var jsonObj = { 'listname':name, 'visibility':visibility };
+                return $http.put(apiBase + '/users/' + user + '/lists/' + id, jsonObj);
+            },
+            addMovieToList: function(user, id, movie) {
+                return $http.post(apiBase + '/users/' + user + '/lists/' + id, movie);
+            },
+            removeMovieFromList: function(user, id, movie) {
+                return $http.delete(apiBase + '/users/' + user + '/lists/' + id + '/' + movie);
             }
         };
     }

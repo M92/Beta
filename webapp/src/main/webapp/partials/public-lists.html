@@ -1,20 +1,22 @@
-<h3>Public Lists</h3>
-<table class="table table-striped">
+<h1>Public Lists</h1>
+<table class="table table-striped" style="margin-top:20px">
     <thead>
         <tr>
-            <th>List Title</th>
-            <th>Number of movies</th>
-            <th>Owner</th>
-            <th>Creation Date</th> 
+            <th>List name</th>
+            <th>Movies</th>
+            <th>User</th>
+            <th>Creation date</th>
         </tr>
     </thead>
     <tbody>
         <tr ng-repeat="list in lists">
             <td><a href="lists/{{list.id}}">{{list.name}}</a></td>
-            <td>{{list.movies}}</td>
+            <td>
+                <i class="glyphicon glyphicon-film"></i>
+                &nbsp;{{list.movies}}
+            </td>
             <td>{{list.owner}}</td>
             <td>{{list.creationDate.split("T")[0]}}</td>
         </tr>
     </tbody>
 </table>
-

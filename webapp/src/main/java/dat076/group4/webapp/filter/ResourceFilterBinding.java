@@ -1,4 +1,4 @@
-package dat076.group4.webapp.auth;
+package dat076.group4.webapp.filter;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -10,9 +10,9 @@ import java.lang.annotation.Target;
 import javax.ws.rs.NameBinding;
 
 /**
- * Binds the UserFilter to resources.
+ * Binds the ResourceFilter to resources.
  */
 @NameBinding
 @Retention(RUNTIME)
 @Target({METHOD, FIELD, PARAMETER, TYPE})
-public @interface UserFilterBinding {}
+public @interface ResourceFilterBinding {}
