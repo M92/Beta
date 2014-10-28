@@ -6,24 +6,18 @@ import dat076.group4.model.core.User;
 import dat076.group4.model.dao.IMovieCatalogue;
 import dat076.group4.model.dao.IUserRegistry;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.json.Json;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 
 /**
  * Used to populate the database with mock data.
  */
 @Path("init")
 public class InitDataResource {
-
-    private static final Logger LOG =  Logger.getLogger(InitDataResource.class.getName());
 
     @EJB
     IMovieCatalogue movieCatalogue;
@@ -35,50 +29,48 @@ public class InitDataResource {
     public Response getJson() {
         
         try {
-            for (User u : userRegistry.findAll())
-                userRegistry.delete(u.getId());
-            
-            User a = new User(2845110303L , "adamlindberg076");
-            User b = new User(2845389945L , "linuxuser5");
-            User c = new User(2845633529L , "webapp3");
-            User d = new User(2845674219L , "elderbage");
-            User e = new User(2845729306L , "userguden1");				
-            User f = new User(2845677567L , "viddeoh");
-            User g = new User(2845679313L , "hejagoran");
-            
-            String[] titles = "aaa, bbb, ccc, ddd, eee, fff, ggg, hhh".split(",");
-            List<Movie> listOfMovies = new ArrayList<>();
-            for(String s : titles){
-                Movie m = new Movie(s, 2000);
-                listOfMovies.add(m);
-                movieCatalogue.create(m);
-            }
-            MovieList ml = new MovieList(a, "c00l list", listOfMovies);
-            a.addList(ml);
-            
-            //LOG.log(Level.INFO, ml);
-            userRegistry.create(a);
-            //LOG.log(Level.INFO, a);
-            userRegistry.create(b);
-            userRegistry.create(c);
-            userRegistry.create(d);
-            userRegistry.create(e);
-            userRegistry.create(f);
-            userRegistry.create(g);
-            
-            MovieList mlist = a.newList("hejhejhej");
-            mlist.setVisibility(MovieList.Visibility.PUBLIC);
-            mlist.addMovie(movieCatalogue.find(1L));
-            mlist.addMovie(movieCatalogue.find(2L));
-            mlist.addMovie(movieCatalogue.find(3L));
-            mlist.addMovie(movieCatalogue.find(4L));
-            
-            userRegistry.update(a);
-            
+            Movie movA1 = new Movie(11094,"The Fast and the Furious",2001,107);
+            Movie movA2 = new Movie(155655113,"The Fast and the Furious: Tokyo Drift",2006,98);
+            Movie movA3 = new Movie(771311994,"Need For Speed",2014,130);
+            Movie movA4 = new Movie(17108,"Gone in 60 Seconds",2000,117);
+
+            Movie movB1 = new Movie(12852,"Love Actually",2003,135);
+            Movie movB2 = new Movie(771249048,"Love",2011,90);
+            Movie movB3 = new Movie(351526458,"Love Annabelle",2006,77);
+
+            Movie movC1 = new Movie(12989,"The Shawshank Redemption",1994,142);
+            Movie movC2 = new Movie(12911,"The Godfather",1972,175);
+            Movie movC3 = new Movie(13863,"Pulp Fiction",1994,154);
+            Movie movC4 = new Movie(769959054,"The Dark Knight",2008,152);
+            Movie movC5 = new Movie(12903,"Schindler's List",1993,196);
+
+            User usr1 = addUser(new User(2845674219L, "elderbage"));
+            User usr2 = addUser(new User(2845729306L, "userguden1"));
+            User usr3 = addUser(new User(2845677567L, "viddeoh"));
+            User usr4 = addUser(new User(2845679313L, "hejagoran"));
+            User usr5 = addUser(new User(2845389945L, "linuxuser5"));
+            User usr6 = addUser(new User(2845633529L, "webapp3"));
+
+            MovieList usr1List1 = usr1.newList("Cars and stuff");
+            usr1List1.addMovie(movA1);
+            usr1List1.addMovie(movA2);
+            usr1List1.addMovie(movA3);
+            usr1List1.addMovie(movA4);
+            userRegistry.update(usr1);
 
         } catch (Exception e) {
             return Response.ok(Json.createObjectBuilder().add("init", "Exception").build()).build();
         }
         return Response.ok(Json.createObjectBuilder().add("init", "OK").build()).build();
+    }
+
+    private User addUser(User u) throws Exception {
+        User user = userRegistry.getByOAuth(u.getOAuth());
+        if (user == null) {
+            userRegistry.create(u);
+            return u;
+        } else {
+            return user;
+        }
     }
 }

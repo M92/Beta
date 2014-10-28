@@ -81,7 +81,7 @@ public class User extends AbstractEntity {
         return "User{" + "id=" + getId()
                        + ", oauth=" + oauth
                        + ", nickname=" + nickname
-                       + ", lists=" + lists
+                       + ", lists=" + lists.size()
                        + '}';
     }
 }

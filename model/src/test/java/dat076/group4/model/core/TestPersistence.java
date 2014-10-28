@@ -15,7 +15,6 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.junit.InSequence;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
@@ -65,11 +64,26 @@ public class TestPersistence {
     }
 
     @Test
-    @InSequence(1)
-    public void testCreateUser() throws Exception{
+    public void testCreateUser() throws Exception {
         User user = new User(new Long(1),"aaa");
         userRegistry.create(user);
         assertTrue(userRegistry.findAll().size() > 0);
+    }
+
+    @Test
+    public void testAddMovieToList() throws Exception {
+        User user = new User(new Long(1),"aaa");
+        userRegistry.create(user);
+        MovieList list1 = user.newList("List 1");
+        list1.addMovie(new Movie(1111,"MovieA",2001,107));
+        userRegistry.update(user);
+        assertEquals(1, listCatalogue.findAll().size());
+        assertEquals(1, movieCatalogue.findAll().size());
+        MovieList list2 = user.newList("List 2");
+        list2.addMovie(new Movie(1111,"MovieA",2001,107));
+        userRegistry.update(user);
+        assertEquals(2, listCatalogue.findAll().size());
+        assertTrue(movieCatalogue.findAll().size() > 1);
     }
 
     @Test

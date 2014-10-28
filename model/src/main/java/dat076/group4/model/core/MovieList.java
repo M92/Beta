@@ -114,7 +114,8 @@ public class MovieList extends AbstractEntity {
     @Override
     public String toString() {
         return "MovieList{" + "id=" + getId()
-                + ", user=" + user + ", movies=" + movies
+                + ", user=" + user.getNickname()
+                + ", movies=" + movies
                 + ", creation-date=" + creationDate
                 + ", visibility=" + visibility + '}';
     }

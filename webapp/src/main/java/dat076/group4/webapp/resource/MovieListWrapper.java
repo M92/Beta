@@ -32,7 +32,7 @@ public class MovieListWrapper {
     }
 
     @XmlAttribute 
-    public Long getId() {
+    public long getId() {
         return movieList.getId();
     }
 

@@ -14,8 +14,7 @@ import javax.persistence.Table;
 public class Movie extends AbstractEntity {
 
     @Column(name = "FOREIGN_ID",
-            nullable = false,
-            unique = true)
+            nullable = false)
     private long foreignId;
 
     @Column(nullable = false)

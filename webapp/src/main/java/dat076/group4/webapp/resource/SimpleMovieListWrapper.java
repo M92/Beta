@@ -30,7 +30,7 @@ public class SimpleMovieListWrapper {
     }
 
     @XmlAttribute
-    public Long getId() {
+    public long getId() {
         return movieList.getId();
     }
 
@@ -45,7 +45,7 @@ public class SimpleMovieListWrapper {
     }
 
     @XmlElement
-    public Integer getMovies() {
+    public int getMovies() {
         return movieList.getMovies().size();
     }
 
