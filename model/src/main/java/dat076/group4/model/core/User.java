@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class User extends AbstractEntity {
 
     @Column(nullable = false, unique = true)
-    private Long oauth;
+    private long oauth;
     
     @Column(nullable = false, unique = true)
     private String nickname;
@@ -30,13 +30,13 @@ public class User extends AbstractEntity {
     
     protected User() {}
     
-    public User(Long oauth, String nickname) {
+    public User(long oauth, String nickname) {
         this.oauth = oauth;
         this.nickname = nickname;
         lists = new ArrayList<>();
     }
 
-    public Long getOAuth() {
+    public long getOAuth() {
         return oauth;
     }
 
@@ -48,20 +48,16 @@ public class User extends AbstractEntity {
         return lists;
     }
 
-    public MovieList getList(Long id) {
-        for (MovieList list : lists) {
-            if (list.getId().equals(id)) {
+    public MovieList getList(long id) {
+        for (MovieList list : lists)
+            if (list.getId() == id)
                 return list;
-            }
-        }
+
         return null;
     }
 
     public void addList(MovieList list) {
-        Long id = list.getId();
-        if (id == null)
-            lists.add(list);
-        else if (getList(id) == null)
+        if (getList(list.getId()) == null)
             lists.add(list);
     }
 
@@ -71,9 +67,9 @@ public class User extends AbstractEntity {
         return list;
     }
 
-    public void deleteList(Long id) {
+    public void deleteList(long id) {
         for (MovieList list : lists) {
-            if (list.getId().equals(id)) {
+            if (list.getId() == id) {
                 lists.remove(list);
                 return;
             }
@@ -82,6 +78,10 @@ public class User extends AbstractEntity {
 
     @Override
     public String toString() {
-        return "User{" + "oauth=" + oauth + ", nickname=" + nickname + ", lists=" + lists + '}';
+        return "User{" + "id=" + getId()
+                       + ", oauth=" + oauth
+                       + ", nickname=" + nickname
+                       + ", lists=" + lists
+                       + '}';
     }
 }

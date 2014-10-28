@@ -9,7 +9,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- * Interface to movie list catalogue
+ * Interface to movie list catalogue.
  */
 @Local
 public interface IListCatalogue extends IDAO<MovieList, Long> {

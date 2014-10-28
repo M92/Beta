@@ -8,21 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Base class for all entities
+ * Base class for all entities.
  */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;  //primary key
-   
-    protected AbstractEntity(){
-    }
-    
-    
-   // @Override
-    public Long getId(){
+    @Id private long id;
+
+    protected AbstractEntity() {}
+
+    public long getId() {
         return id;
     }
 

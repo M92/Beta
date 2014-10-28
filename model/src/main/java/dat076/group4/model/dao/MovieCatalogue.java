@@ -29,6 +29,16 @@ public class MovieCatalogue extends AbstractDAO<Movie, Long>
     }
 
     @Override
+    public Movie getByForeignId(long id) {
+        for (Movie m : findAll()) {
+            if (m.getForeignId() == id) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<Movie> getByTitle(String title) {
         List<Movie> found = new ArrayList<>();
         for (Movie m : findAll()) {
@@ -40,7 +50,7 @@ public class MovieCatalogue extends AbstractDAO<Movie, Long>
     }
 
     @Override
-    public List<Movie> getByYear(Integer year) {
+    public List<Movie> getByYear(int year) {
         List<Movie> found = new ArrayList<>();
         for (Movie m : findAll()) {
             if (m.getReleaseYear() == year) {

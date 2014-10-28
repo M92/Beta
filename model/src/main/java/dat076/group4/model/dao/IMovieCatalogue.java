@@ -7,12 +7,14 @@ import java.util.List;
 import javax.ejb.Local;
 
 /**
- * Interface to movie catalogue
+ * Interface to movie catalogue.
  */
 @Local
 public interface IMovieCatalogue extends IDAO<Movie, Long> {
 
+    Movie getByForeignId(long id);
+
     List<Movie> getByTitle(String name);
 
-    List<Movie> getByYear(Integer year);
+    List<Movie> getByYear(int year);
 }

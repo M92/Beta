@@ -5,7 +5,6 @@ import dat076.group4.model.persistence.AbstractEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -30,7 +29,7 @@ public class MovieList extends AbstractEntity {
         PUBLIC,
     }  
     
-    @Column(name = "LIST_NAME")
+    @Column(name = "LIST_NAME", nullable = false)
     private String listName;
 
     @ManyToOne
@@ -81,21 +80,23 @@ public class MovieList extends AbstractEntity {
         return movies;
     }
 
-    public void addMovie(Movie movie){
-        movies.add(movie);
-    }
-    
-    public void deleteMovie(Long id) {
-        for (int i = 0; i < movies.size(); i++) {
-            if (movies.get(i).getId().equals(id)) {
-                movies.remove(i);
+    public void addMovie(Movie movie) {
+        Long id = movie.getForeignId();
+        for (Movie m : movies) {
+            if (m.getForeignId() == id) {
+                return;
             }
         }
-
+        movies.add(movie);
     }
-    
-    public int size(){
-        return movies.size();
+
+    public void removeMovie(Long foreignId) {
+        for (Movie movie : movies) {
+            if (movie.getForeignId() == foreignId) {
+                movies.remove(movie);
+                return;
+            }
+        }
     }
     
     public Date getCreationDate() {

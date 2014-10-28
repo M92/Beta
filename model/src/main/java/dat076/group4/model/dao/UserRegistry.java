@@ -30,17 +30,17 @@ public class UserRegistry extends AbstractDAO<User, Long>
     public User getByNickname(String name) {
         for (User u : findAll()) {
             if (u.getNickname().equals(name)) {
-                    return u;
+                return u;
             }
         }
         return null;
-    }  
+    }
 
     @Override
-    public User getByOAuth(Long oauth) {
+    public User getByOAuth(long oauth) {
          for (User u : findAll()) {
-            if (u.getOAuth().equals(oauth)) {
-                    return u;
+            if (u.getOAuth() == oauth) {
+                return u;
             }
         }
         return null;

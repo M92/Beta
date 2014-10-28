@@ -63,10 +63,18 @@ public class TestPersistence {
     public void before() throws Exception {
         clearAll();
     }
- 
+
+    @Test
+    @InSequence(1)
+    public void testCreateUser() throws Exception{
+        User user = new User(new Long(1),"aaa");
+        userRegistry.create(user);
+        assertTrue(userRegistry.findAll().size() > 0);
+    }
+
     @Test
     public void testMovieCreate() throws Exception {
-        Movie p = new Movie("Persist", 123);
+        Movie p = new Movie(2000L, "Persist", 123);
         movieCatalogue.create(p);
         List<Movie> ps = movieCatalogue.findAll();
         assertTrue(ps.size() > 0);
@@ -75,8 +83,8 @@ public class TestPersistence {
 
     @Test
     public void testMovieGetByTitle() throws Exception {
-        Movie p1 = new Movie("GetByTitle", 123);
-        Movie p2 = new Movie("GetByTitle", 123);
+        Movie p1 = new Movie(1000L, "GetByTitle", 123);
+        Movie p2 = new Movie(2000L, "GetByTitle", 123);
         movieCatalogue.create(p1);
         movieCatalogue.create(p2);
         List<Movie> ps = movieCatalogue.getByTitle("GetByTitle");
@@ -87,8 +95,8 @@ public class TestPersistence {
 
     @Test
     public void testMovieGetByYear() throws Exception {
-        Movie p1 = new Movie("GetByYear", 123);
-        Movie p2 = new Movie("GetByYear", 123);
+        Movie p1 = new Movie(1000L, "GetByYear", 123);
+        Movie p2 = new Movie(2000L, "GetByYear", 123);
         movieCatalogue.create(p1);
         movieCatalogue.create(p2);
         List<Movie> ps = movieCatalogue.getByYear(123);
@@ -99,7 +107,7 @@ public class TestPersistence {
 
     @Test
     public void testMovieDelete() throws Exception {
-        Movie p = new Movie("Delete", 123);
+        Movie p = new Movie(999L, "Delete", 123);
         movieCatalogue.create(p);
         movieCatalogue.delete(p.getId());
         assertTrue(movieCatalogue.findAll().isEmpty());
@@ -107,7 +115,7 @@ public class TestPersistence {
 
     @Test
     public void testMovieUpdate() throws Exception {
-        Movie p = new Movie("Update", 123);
+        Movie p = new Movie(999L, "Update", 123);
         movieCatalogue.create(p);
         p.setTitle("Updated");
         movieCatalogue.update(p);
@@ -117,7 +125,7 @@ public class TestPersistence {
 
     @Test
     public void testMovieFind() throws Exception {
-        Movie p = new Movie("Find", 123);
+        Movie p = new Movie(999L, "Find", 123);
         movieCatalogue.create(p);
         assertTrue(movieCatalogue.find(p.getId()) != null);
     }
@@ -126,7 +134,7 @@ public class TestPersistence {
     public void testMovieFindAll() throws Exception {
         int count = 5;
         for (int i = 0; i < count; i++) {
-            Movie p = new Movie("FindAll", 123);
+            Movie p = new Movie(10L * i, "FindAll", 123);
             movieCatalogue.create(p);
         }
         List<Movie> ps = movieCatalogue.findAll();
@@ -137,7 +145,7 @@ public class TestPersistence {
     public void testMovieFindRange() throws Exception {
         int count = 5;
         for (int i = 0; i < count; i++) {
-            Movie p = new Movie("FindRange", i);
+            Movie p = new Movie(10L * i, "FindRange", i);
             movieCatalogue.create(p);
         }
         List<Movie> ps = movieCatalogue.findRange(2, 2);
@@ -149,7 +157,7 @@ public class TestPersistence {
     public void testMovieCount() throws Exception {
         int count = 5;
         for (int i = 0; i < count; i++) {
-            Movie p = new Movie("Count", 123);
+            Movie p = new Movie(10L * i, "Count", 123);
             movieCatalogue.create(p);
         }
         assertTrue(count == movieCatalogue.count());
@@ -158,7 +166,7 @@ public class TestPersistence {
     @Test
     public void testPersistCreateListCatalogue() throws Exception{
         List<Movie> items = new ArrayList<>();
-        Movie m = new Movie("hihih", 2);
+        Movie m = new Movie(9873L, "hihih", 2);
         User user = new User(new Long(2),"bbb");
         
         movieCatalogue.create(m);
@@ -183,7 +191,7 @@ public class TestPersistence {
         List<Movie> items = new ArrayList<>();
         //Movie p, User c, Movie item must be cascaded (Must be persistent)
         //Ex in ProductCatalogue @ManyToOne(cascade = CascadeType.PERSIST)
-        Movie m = new Movie("eee", 555);
+        Movie m = new Movie(98L, "eee", 555);
         User user = new User(new Long(3),"ccc");
         movieCatalogue.create(m);
         userRegistry.create(user);
@@ -209,7 +217,7 @@ public class TestPersistence {
         List<Movie> items = new ArrayList<>();
         //Movie p, User c, Movie item must be cascaded (Must be persistent)
         //Ex in ProductCatalogue @ManyToOne(cascade = CascadeType.PERSIST)
-        Movie m = new Movie("eee", 555);
+        Movie m = new Movie(678L, "eee", 555);
         User user = new User(new Long(4),"ddd");
         movieCatalogue.create(m);
         userRegistry.create(user);
@@ -252,46 +260,6 @@ public class TestPersistence {
         assertTrue(!listCatalogue.findAll().isEmpty());
         userRegistry.delete(user.getId());
         assertTrue(listCatalogue.findAll().isEmpty());    
-    }
-
-    @Test
-    @InSequence(15)
-    public void testCreateUser() throws Exception{
-        User user = new User(new Long(1),"aaa");
-        userRegistry.create(user);
-        assertTrue(userRegistry.findAll().size() > 0);
-    }
-
-    @Test
-    @InSequence(16)
-    public void testMovieBulkUpdate() throws Exception {
-        utx.begin(); 
-        String[] titles = "aaa, bbb, ccc, ddd, eee, fff, ggg, hhh".split(",");
-        List<Movie> listOfMovies = new ArrayList<>();
-        for(String s : titles){
-            Movie m = new Movie(s, 2000);
-            listOfMovies.add(m);
-            movieCatalogue.create(m);
-        }
-        
-        int count = 50;
-        for (int i = 0; i < count; i++) {
-            Movie p = new Movie("Bulk"+i, 100);
-            movieCatalogue.create(p);
-        }
-         
-        int updateCount = em.createQuery(
-                "UPDATE Movie m SET m.releaseYear = 200 WHERE m.releaseYear = 100")
-                .executeUpdate();
-        
-        User user = new User(new Long(1),"aaa");
-        MovieList list = new MovieList(user, "My Awesome List", listOfMovies);
-        list.setVisibility(MovieList.Visibility.PUBLIC);
-        user.addList(list);
-        userRegistry.create(user);
-        utx.commit();
-        assertTrue(updateCount == count);
-        assertTrue(movieCatalogue.getByYear(200).size() == count);
     }
 
     private void clearAll() throws Exception {  
