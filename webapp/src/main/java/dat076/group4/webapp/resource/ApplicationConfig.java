@@ -24,5 +24,9 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(dat076.group4.webapp.filter.ResourceFilter.class);
+        resources.add(dat076.group4.webapp.resource.InitDataResource.class);
+        resources.add(dat076.group4.webapp.resource.ListCatalogueResource.class);
+        resources.add(dat076.group4.webapp.resource.SessionResource.class);
+        resources.add(dat076.group4.webapp.resource.UserRegistryResource.class);
     }
 }
